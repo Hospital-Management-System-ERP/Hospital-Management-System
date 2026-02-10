@@ -14,7 +14,7 @@ if (!defined('BASE_URL')) {
     }
 }
 
-$dbname = getenv('DB_NAME') ?: 'cityhomecare';
+$dbname = getenv('DB_NAME') ?: '';
 $host = getenv('DB_HOST') ?: 'localhost';
 $db_username = getenv('DB_USER') ?: 'root';
 $db_password = getenv('DB_PASS') ?: '';
