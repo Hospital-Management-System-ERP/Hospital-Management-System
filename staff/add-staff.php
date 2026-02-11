@@ -314,7 +314,7 @@ include('../includes/top-header.php');
                                     Present Address same as Permanent Address
                                 </label>
                             </div>
-                            <p class="present-address">Permanent Address</p>
+                            <p class="present-address">Present Address</p>
                             <div class="row mt-4">
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group">
