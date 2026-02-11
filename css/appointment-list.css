@@ -560,3 +560,124 @@
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
+
+/* Dr wise Schedule */
+.drwise-schedule {
+  border-radius: 10px;
+  padding: 18px;
+  border: 0.1px solid #153a2d;
+  background-color: #fff;
+  transition: 0.3s ease;
+  width: 100%;
+}
+.drwise-schedule .doctor-card {
+  display: flex;
+  flex-wrap: wrap;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.drwise-schedule .doctor-info {
+  flex: 1 1 200px;
+  background: #10874e;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+.drwise-schedule .doctor-info img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 3px solid #fff;
+}
+.drwise-schedule .doctor-info h3 {
+  margin: 5px 0;
+  font-size: 20px;
+}
+.drwise-schedule .doctor-info p {
+  margin: 0;
+  font-size: 14px;
+}
+.drwise-schedule .schedule-table {
+  flex: 3 1 500px;
+  padding: 20px;
+  overflow-x: auto;
+}
+.drwise-schedule table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.drwise-schedule th,
+.drwise-schedule td {
+  padding: 7px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.drwise-schedule th {
+  font-size: 14px;
+}
+.drwise-schedule td {
+  font-size: 13px;
+}
+.drwise-schedule th {
+  background: #f0f0f0;
+}
+.drwise-schedule td button {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 5px;
+  background: #10874e;
+  color: #fff;
+  cursor: pointer;
+}
+.drwise-schedule td button:hover {
+  background: #153a2d;
+}
+.drwise-schedule-top {
+  font-size: 13px;
+  border-bottom: 1px solid #374151;
+  border-radius: 0px 0px 7px 7px;
+  padding: 0px 10px 10px 10px;
+  letter-spacing: 0.5px;
+}
+.drwise-schedule .action-btn.view {
+  color: #fff;
+  background-color: #2a9df4;
+}
+.drwise-schedule .action-btn.cancel {
+  color: #fff;
+  background-color: #e74c3c;
+}
+.drwise-schedule .action-btn.reschedule {
+  color: #fff;
+  background-color: #f39c12; 
+}
+.drwise-schedule .action-btn.remove {
+  color: #fff;
+  background-color: #555; 
+}
+.drwise-schedule .action-btn {
+  border: none;
+  border-radius: 5px;
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+  transition: 0.3s;
+}
+.drwise-schedule .action-btn:hover {
+  opacity: 0.7;
+}
+@media (max-width: 768px) {
+  .drwise-schedule .doctor-card {
+    flex-direction: column;
+  }
+  .drwise-schedule .doctor-info,
+  .drwise-schedule .schedule-table {
+    flex: 1 1 100%;
+  }
+}

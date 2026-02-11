@@ -6,7 +6,8 @@
         'book-appointment' => 'Book Appointment',
         'profile' => 'Profile',
         'add-staff' => 'Add Staff',
-        'staff-list' => 'Staff List'
+        'staff-list' => 'Staff List',
+        'doctor-wise-schedule' => 'Doctor Wise Schedule'
     ];
 
     $title = isset($titles[$page]) ? $titles[$page] : 'Home Page';

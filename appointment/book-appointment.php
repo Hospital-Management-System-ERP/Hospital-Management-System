@@ -57,33 +57,52 @@ include('../includes/top-header.php');
                     <span class="corner bl"></span>
                     <form>
                         <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="mb-3">
                                     <label for="fullName" class="form-label">Full Name <sup><span style="color: red;">*</span></sup></label>
                                     <input type="text" name="name" id="name" class="form-control traditional-input" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" placeholder="Enter your name">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="mb-3">
                                     <label for="fullName" class="form-label">Mobile Number <sup><span style="color: red;">*</span></sup></label>
                                     <input type="text" name="mobile" id="mobile" class="form-control traditional-input" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter your mobile no.">
                                 </div>
                             </div>
 
-                            <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="fullName" class="form-label">Email ID</label>
+                                    <label for="fullName" class="form-label">Email ID </label>
                                     <input type="email" name="email" id="email" class="form-control traditional-input" placeholder="Enter your email">
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="fullName" class="form-label">Age <sup><span style="color: red;">*</span></sup></label>
+                                    <input type="number" name="age" id="age" class="form-control traditional-input" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter Patient Age">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="fullName" class="form-label">Gender <sup><span style="color: red;">*</span></sup></label>
+                                    <select id="gender" name="gender" class="form-select traditional-input">
+                                        <option value="" disabled selected>Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="mb-3">
                                     <label for="fullName" class="form-label">Address <sup><span style="color:red;">*</span></sup></label>
                                     <textarea rows="1" name="address" class="form-control traditional-input" placeholder="Full Address..." id="address"></textarea>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="mb-3">
                                     <label for="userRole" class="form-label">Select Service Type <sup><span style="color:red;">*</span></sup></label>
                                     <select id="service" name="service" class="form-select traditional-input">
@@ -104,6 +123,7 @@ include('../includes/top-header.php');
                                                     <th>Doctor <sup><span style="color:red;">*</span></sup></th>
                                                     <th>Date <sup><span style="color:red;">*</span></sup></th>
                                                     <th>Time <sup><span style="color:red;">*</span></sup></th>
+                                                    <th>Purpose</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -129,6 +149,9 @@ include('../includes/top-header.php');
                                                     <td data-label="Time">
                                                         <input type="time" name="appointment_time" id="appointment_time" class="form-control traditional-input">
                                                     </td>
+                                                    <td data-label="purpose">
+                                                        <textarea name="purpose" id="purpose" class="form-control traditional-input"></textarea>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -147,6 +170,7 @@ include('../includes/top-header.php');
                                                     <th>From <sup><span style="color:red;">*</span></sup></th>
                                                     <th>To <sup><span style="color:red;">*</span></sup></th>
                                                     <th>Time <sup><span style="color:red;">*</span></sup></th>
+                                                    <th>Purpose</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -265,6 +289,9 @@ include('../includes/top-header.php');
                                                     </td>
                                                     <td data-label="Time">
                                                         <input type="time" name="appointment_time" id="appointment_time" class="form-control traditional-input">
+                                                    </td>
+                                                    <td data-label="purpose">
+                                                        <textarea name="purpose" id="purpose" class="form-control traditional-input"></textarea>
                                                     </td>
                                                 </tr>
                                             </tbody>
