@@ -11,7 +11,7 @@ $name = $claims['name'];
 $username = $claims['username'] ?? '';
 $permissions = $claims['permissions'] ?? [];
 
-if ($role !== 'admin' && !in_array('appointment_list', $permissions)) {
+if ($role !== 'admin' && !in_array('appointment_online', $permissions)) {
     http_response_code(403);
     echo "❌ Unauthorized Access";
     exit;
@@ -30,7 +30,7 @@ include('../includes/top-header.php');
                         <i class="bi bi-arrow-right mx-1"></i>
                         <span><i class="bi bi-calendar-check me-1"></i> Appointment</span>
                         <i class="bi bi-arrow-right mx-1"></i>
-                        <span>Appointment List</span>
+                        <span>Online Appointment</span>
                     </span>
                     <div class="digital-watch">
                         <?php include __DIR__ . '/../watch.php'; ?>

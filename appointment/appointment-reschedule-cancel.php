@@ -30,7 +30,7 @@ include('../includes/top-header.php');
                         <i class="bi bi-arrow-right mx-1"></i>
                         <span><i class="bi bi-calendar-check me-1"></i> Appointment</span>
                         <i class="bi bi-arrow-right mx-1"></i>
-                        <span>Doctor Wise Schedule</span>
+                        <span>Reschedule or Cancel Appointment</span>
                     </span>
                     <div class="digital-watch">
                         <?php include __DIR__ . '/../watch.php'; ?>
@@ -56,6 +56,10 @@ include('../includes/top-header.php');
                             <i class="bi bi-file-earmark-pdf"></i> PDF
                         </button>
 
+                        <button class="btn btn-primary btn-sm export-btn">
+                            <i class="bi bi-filetype-csv"></i> CSV
+                        </button>
+
                         <button class="btn btn-dark btn-sm export-btn" onclick="window.print()">
                             <i class="bi bi-printer"></i> Print
                         </button>
@@ -63,11 +67,7 @@ include('../includes/top-header.php');
                     <!-- Right side: Search -->
                     <div class="search-box">
                         <i class="bi bi-person-fill"></i>
-                        <input type="text" name="name" placeholder="Search Name...">
-                    </div>
-                    <div class="search-box">
-                        <i class="bi bi-lightbulb-fill"></i>
-                        <input type="text" name="name" placeholder="Search Specialization...">
+                        <input type="text" name="name" placeholder="Search ...">
                     </div>
                     <div class="search-box">
                         <input type="date" name="date" placeholder="Search appointment...">
@@ -76,9 +76,9 @@ include('../includes/top-header.php');
             </div>
             <div class="col-12">
                 <div class="drwise-schedule mb-5">
-                    <p class="drwise-schedule-top">All Doctor Wise Schedule</p>
+                    <p class="drwise-schedule-top">All Reschedule or Cancel Appointment Details</p>
                     <div class="doctor-card">
-                        <div class="doctor-info">
+                        <div class="doctor-info" style="background-color: #FF4646;">
                             <img src="<?= BASE_URL ?>staff/img/profile.png" alt="Doctor Photo">
                             <h3>Dr. Ashraf Ali</h3>
                             <p>Cardiologist</p>
@@ -91,6 +91,7 @@ include('../includes/top-header.php');
                                         <th>Time</th>
                                         <th>Patient Name</th>
                                         <th>Disease</th>
+                                        <th>Status</th>
                                         <th style="width: 180px;">Action</th>
                                     </tr>
                                 </thead>
@@ -100,6 +101,11 @@ include('../includes/top-header.php');
                                         <td>10:00 - 10:30</td>
                                         <td>John Doe</td>
                                         <td>Fever</td>
+                                        <td>
+                                            <span class="badge bg-warning-subtle text-warning border border-warning ms-1">
+                                                <i class="bi bi-arrow-repeat"></i> Reschedule
+                                            </span>
+                                        </td>
                                         <td>
                                             <button class="action-btn view" title="View"><i class="bi bi-eye"></i></button>
                                             <button class="action-btn cancel" title="Cancel"><i class="bi bi-x-circle"></i></button>
@@ -113,6 +119,11 @@ include('../includes/top-header.php');
                                         <td>Jane Smith</td>
                                         <td>Cold</td>
                                         <td>
+                                            <span class="badge bg-danger-subtle text-danger border border-danger">
+                                                <i class="bi bi-x-circle"></i> Cancel
+                                            </span>
+                                        </td>
+                                        <td>
                                             <button class="action-btn view" title="View"><i class="bi bi-eye"></i></button>
                                             <button class="action-btn cancel" title="Cancel"><i class="bi bi-x-circle"></i></button>
                                             <button class="action-btn reschedule" title="Reschedule"><i class="bi bi-calendar-event"></i></button>
@@ -124,6 +135,11 @@ include('../includes/top-header.php');
                                         <td>11:00 - 11:30</td>
                                         <td>Michael Ray</td>
                                         <td>Diabetes</td>
+                                        <td>
+                                            <span class="badge bg-warning-subtle text-warning border border-warning ms-1">
+                                                <i class="bi bi-arrow-repeat"></i> Reschedule
+                                            </span>
+                                        </td>
                                         <td>
                                             <button class="action-btn view" title="View"><i class="bi bi-eye"></i></button>
                                             <button class="action-btn cancel" title="Cancel"><i class="bi bi-x-circle"></i></button>
@@ -137,7 +153,7 @@ include('../includes/top-header.php');
                     </div>
 
                     <div class="doctor-card">
-                        <div class="doctor-info">
+                        <div class="doctor-info" style="background-color: #FF4646;">
                             <img src="<?= BASE_URL ?>staff/img/profile.png" alt="Doctor Photo">
                             <h3>Dr. Ashraf Ali</h3>
                             <p>Cardiologist</p>
@@ -150,6 +166,7 @@ include('../includes/top-header.php');
                                         <th>Time</th>
                                         <th>Patient Name</th>
                                         <th>Disease</th>
+                                        <th>Status</th>
                                         <th style="width: 180px;">Action</th>
                                     </tr>
                                 </thead>
@@ -159,6 +176,11 @@ include('../includes/top-header.php');
                                         <td>10:00 - 10:30</td>
                                         <td>John Doe</td>
                                         <td>Fever</td>
+                                        <td>
+                                            <span class="badge bg-warning-subtle text-warning border border-warning ms-1">
+                                                <i class="bi bi-arrow-repeat"></i> Reschedule
+                                            </span>
+                                        </td>
                                         <td>
                                             <button class="action-btn view" title="View"><i class="bi bi-eye"></i></button>
                                             <button class="action-btn cancel" title="Cancel"><i class="bi bi-x-circle"></i></button>
@@ -172,6 +194,11 @@ include('../includes/top-header.php');
                                         <td>Jane Smith</td>
                                         <td>Cold</td>
                                         <td>
+                                            <span class="badge bg-warning-subtle text-warning border border-warning ms-1">
+                                                <i class="bi bi-arrow-repeat"></i> Reschedule
+                                            </span>
+                                        </td>
+                                        <td>
                                             <button class="action-btn view" title="View"><i class="bi bi-eye"></i></button>
                                             <button class="action-btn cancel" title="Cancel"><i class="bi bi-x-circle"></i></button>
                                             <button class="action-btn reschedule" title="Reschedule"><i class="bi bi-calendar-event"></i></button>
@@ -183,6 +210,11 @@ include('../includes/top-header.php');
                                         <td>11:00 - 11:30</td>
                                         <td>Michael Ray</td>
                                         <td>Diabetes</td>
+                                        <td>
+                                            <span class="badge bg-warning-subtle text-warning border border-warning ms-1">
+                                                <i class="bi bi-arrow-repeat"></i> Reschedule
+                                            </span>
+                                        </td>
                                         <td>
                                             <button class="action-btn view" title="View"><i class="bi bi-eye"></i></button>
                                             <button class="action-btn cancel" title="Cancel"><i class="bi bi-x-circle"></i></button>
@@ -196,7 +228,7 @@ include('../includes/top-header.php');
                     </div>
 
                     <div class="doctor-card">
-                        <div class="doctor-info">
+                        <div class="doctor-info" style="background-color: #FF4646;">
                             <img src="<?= BASE_URL ?>staff/img/profile.png" alt="Doctor Photo">
                             <h3>Dr. Ashraf Ali</h3>
                             <p>Cardiologist</p>
@@ -209,6 +241,7 @@ include('../includes/top-header.php');
                                         <th>Time</th>
                                         <th>Patient Name</th>
                                         <th>Disease</th>
+                                        <th>Status</th>
                                         <th style="width: 180px;">Action</th>
                                     </tr>
                                 </thead>
@@ -218,6 +251,11 @@ include('../includes/top-header.php');
                                         <td>10:00 - 10:30</td>
                                         <td>John Doe</td>
                                         <td>Fever</td>
+                                        <td>
+                                            <span class="badge bg-warning-subtle text-warning border border-warning ms-1">
+                                                <i class="bi bi-arrow-repeat"></i> Reschedule
+                                            </span>
+                                        </td>
                                         <td>
                                             <button class="action-btn view" title="View"><i class="bi bi-eye"></i></button>
                                             <button class="action-btn cancel" title="Cancel"><i class="bi bi-x-circle"></i></button>
@@ -231,6 +269,11 @@ include('../includes/top-header.php');
                                         <td>Jane Smith</td>
                                         <td>Cold</td>
                                         <td>
+                                            <span class="badge bg-warning-subtle text-warning border border-warning ms-1">
+                                                <i class="bi bi-arrow-repeat"></i> Reschedule
+                                            </span>
+                                        </td>
+                                        <td>
                                             <button class="action-btn view" title="View"><i class="bi bi-eye"></i></button>
                                             <button class="action-btn cancel" title="Cancel"><i class="bi bi-x-circle"></i></button>
                                             <button class="action-btn reschedule" title="Reschedule"><i class="bi bi-calendar-event"></i></button>
@@ -242,6 +285,11 @@ include('../includes/top-header.php');
                                         <td>11:00 - 11:30</td>
                                         <td>Michael Ray</td>
                                         <td>Diabetes</td>
+                                        <td>
+                                            <span class="badge bg-warning-subtle text-warning border border-warning ms-1">
+                                                <i class="bi bi-arrow-repeat"></i> Reschedule
+                                            </span>
+                                        </td>
                                         <td>
                                             <button class="action-btn view" title="View"><i class="bi bi-eye"></i></button>
                                             <button class="action-btn cancel" title="Cancel"><i class="bi bi-x-circle"></i></button>

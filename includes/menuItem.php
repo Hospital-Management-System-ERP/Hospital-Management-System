@@ -14,8 +14,8 @@ $sidebarItems = [
     ['title' => 'Book Appointment', 'icon' => 'bi-calendar-check', 'url' => BASE_URL.'appointment/book-appointment', 'permission' => 'appointment_book', 'parent' => 'Appointment'],
     ['title' => 'Appointment List', 'icon' => 'bi-calendar-check', 'url' => BASE_URL.'appointment/appointment-list', 'permission' => 'appointment_list', 'parent' => 'Appointment'],
     ['title' => 'Doctor-wise Schedule', 'icon' => 'bi-calendar-check', 'url' => BASE_URL.'appointment/doctor-wise-schedule', 'permission' => 'appointment_schedule', 'parent' => 'Appointment'],
-    ['title' => 'Reschedule / Cancel', 'icon' => 'bi-calendar-check', 'url' => '', 'permission' => 'appointment_reschedule_cancel', 'parent' => 'Appointment'],
-    ['title' => 'Online Appointments', 'icon' => 'bi-calendar-check', 'url' => '', 'permission' => 'appointment_online', 'parent' => 'Appointment'],
+    ['title' => 'Reschedule / Cancel', 'icon' => 'bi-calendar-check', 'url' => BASE_URL.'appointment/appointment-reschedule-cancel', 'permission' => 'appointment_reschedule_cancel', 'parent' => 'Appointment'],
+    ['title' => 'Online Appointments', 'icon' => 'bi-calendar-check', 'url' => BASE_URL.'appointment/online-appointment', 'permission' => 'appointment_online', 'parent' => 'Appointment'],
 
     // doctor management
     ['title' => 'Add Doctor', 'icon' => 'bi-person-badge', 'url' => '', 'permission' => 'doctor_add', 'parent' => 'Doctor Management'],

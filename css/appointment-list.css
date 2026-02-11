@@ -654,11 +654,11 @@
 }
 .drwise-schedule .action-btn.reschedule {
   color: #fff;
-  background-color: #f39c12; 
+  background-color: #f39c12;
 }
 .drwise-schedule .action-btn.remove {
   color: #fff;
-  background-color: #555; 
+  background-color: #555;
 }
 .drwise-schedule .action-btn {
   border: none;
@@ -679,5 +679,49 @@
   .drwise-schedule .doctor-info,
   .drwise-schedule .schedule-table {
     flex: 1 1 100%;
+  }
+}
+/* Mobile View Action Buttons Style */
+@media (max-width: 768px) {
+  .drwise-schedule .schedule-table table,
+  .drwise-schedule .schedule-table thead,
+  .drwise-schedule .schedule-table tbody,
+  .drwise-schedule .schedule-table th,
+  .drwise-schedule .schedule-table td,
+  .drwise-schedule .schedule-table tr {
+    display: block;
+    width: 100%;
+  }
+  .drwise-schedule .schedule-table thead {
+    display: none;
+  }
+
+  .drwise-schedule .schedule-table tr {
+    margin-bottom: 15px;
+    background: #fff;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .drwise-schedule .schedule-table td {
+    padding: 8px 0;
+    border: none;
+    position: relative;
+  }
+  .drwise-schedule .schedule-table td:last-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    border-top: 1px dashed #ddd;
+    padding-top: 12px;
+  }
+  .drwise-schedule .action-btn {
+    flex: 1;
+    margin: 0 4px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
   }
 }
