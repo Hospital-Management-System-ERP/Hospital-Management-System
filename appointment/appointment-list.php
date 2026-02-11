@@ -77,54 +77,50 @@ include('../includes/top-header.php');
                         <table id="appointmentTable" class="table table-hover align-middle responsive-table">
                             <thead class="table-light">
                                 <tr>
-                                    <th>#</th>
-                                    <th>Patient Name</th>
-                                    <th>Doctor</th>
+                                    <th>Sno.</th>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Service Type</th>
+                                    <th>Cycle</th>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>Rahul Kumar</td>
-                                    <td>Dr. Sharma</td>
-                                    <td>15 Jan 2026</td>
-                                    <td>10:30 AM</td>
-                                    <td><span class="badge bg-success">Confirmed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Neha Singh</td>
-                                    <td>Dr. Verma</td>
-                                    <td>16 Jan 2026</td>
-                                    <td>12:00 PM</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Neha Singh</td>
-                                    <td>Dr. Verma</td>
-                                    <td>16 Jan 2026</td>
-                                    <td>12:00 PM</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Neha Singh</td>
-                                    <td>Dr. Verma</td>
-                                    <td>16 Jan 2026</td>
-                                    <td>12:00 PM</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Neha Singh</td>
-                                    <td>Dr. Verma</td>
-                                    <td>16 Jan 2026</td>
-                                    <td>12:00 PM</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    <td>Asraf</td>
+                                    <td>9934102010</td>
+                                    <td>test@gmail.com</td>
+                                    <td>Kolkata</td>
+                                    <td>Home</td>
+                                    <td>Daily</td>
+                                    <td>10-10-2025</td>
+                                    <td>10:20 A.M</td>
+                                    <td>
+                                        <span class="status-badge active">Active</span>
+                                    </td>
+                                    <td class="action-btns">
+                                        <button class="btn-action edit" title="Edit">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+
+                                        <button class="btn-action view" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+
+                                        <button class="btn-action assign" title="Assign Nurse">
+                                            <i class="bi bi-person-plus"></i>
+                                        </button>
+
+                                        <button class="btn-action delete" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -133,44 +129,36 @@ include('../includes/top-header.php');
 
                 <div class="mobile-only">
                     <div class="appointment-card">
+                        <!-- Header -->
                         <div class="card-header">
-                            <h6>Rahul Kumar</h6>
-                            <span class="status-badge status-confirmed">Confirmed</span>
+                            <h6>Asraf</h6>
+                            <span class="status-badge active">Active</span>
                         </div>
-
+                        <!-- Body -->
                         <div class="card-body">
-                            <p><i class="bi bi-calendar-event"></i> 08 Feb 2026</p>
-                            <p><i class="bi bi-clock"></i> 11:30 AM</p>
-                            <p><i class="bi bi-person"></i> Dr. Sharma</p>
+                            <p><i class="bi bi-telephone"></i> 9934102010</p>
+                            <p><i class="bi bi-envelope"></i> test@gmail.com</p>
+                            <p><i class="bi bi-geo-alt"></i> Kolkata</p>
+                            <p><i class="bi bi-heart-pulse"></i> Home</p>
+                            <p><i class="bi bi-arrow-repeat"></i> Daily</p>
+                            <p><i class="bi bi-calendar-event"></i> 10-10-2025</p>
+                            <p><i class="bi bi-clock"></i> 10:20 AM</p>
                         </div>
-
                         <div class="divider"></div>
-
+                        <!-- Actions -->
                         <div class="card-actions">
-                            <button class="btn-view">View</button>
-                            <button class="btn-edit">Edit</button>
-                            <button class="btn-delete">Cancel</button>
-                        </div>
-                    </div>
-
-                    <div class="appointment-card">
-                        <div class="card-header">
-                            <h6>Rahul Kumar</h6>
-                            <span class="status-badge status-confirmed">Confirmed</span>
-                        </div>
-
-                        <div class="card-body">
-                            <p><i class="bi bi-calendar-event"></i> 08 Feb 2026</p>
-                            <p><i class="bi bi-clock"></i> 11:30 AM</p>
-                            <p><i class="bi bi-person"></i> Dr. Sharma</p>
-                        </div>
-
-                        <div class="divider"></div>
-
-                        <div class="card-actions">
-                            <button class="btn-view">View</button>
-                            <button class="btn-edit">Edit</button>
-                            <button class="btn-delete">Cancel</button>
+                            <button class="btn-action edit" title="Edit">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn-action view" title="View">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn-action assign" title="Assign Nurse">
+                                <i class="bi bi-person-plus"></i>
+                            </button>
+                            <button class="btn-action delete" title="Delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

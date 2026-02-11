@@ -143,7 +143,9 @@ include('../includes/top-header.php');
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Service <sup><span style="color:red;">*</span></sup></th>
-                                                    <th>Date <sup><span style="color:red;">*</span></sup></th>
+                                                    <th>Service Cycle <sup><span style="color:red;">*</span></sup></th>
+                                                    <th>From <sup><span style="color:red;">*</span></sup></th>
+                                                    <th>To <sup><span style="color:red;">*</span></sup></th>
                                                     <th>Time <sup><span style="color:red;">*</span></sup></th>
                                                 </tr>
                                             </thead>
@@ -236,9 +238,30 @@ include('../includes/top-header.php');
                                                                 Medical Equipment on Rent
                                                             </label>
                                                         </div>
+                                                        <div class="add-more-wrapper">
+                                                            <button type="button" class="add-more-btn-appointment" onclick="addServiceInput()">
+                                                                + Add more
+                                                            </button>
+
+                                                            <div id="customServiceContainer"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="cycle">
+                                                        <select name="service_cycle" id="service_cycle" class="form-control traditional-input">
+                                                            <option disabled selected value="">--Select One--</option>
+                                                            <option value="Daily">Daily</option>
+                                                            <option value="Weekly">Weekly</option>
+                                                            <option value="Monthly">Monthly</option>
+                                                        </select>
                                                     </td>
                                                     <td data-label="Date">
-                                                        <input type="date" name="doa" id="doa" class="form-control traditional-input">
+                                                        <input type="date" name="from" id="from" class="form-control traditional-input">
+                                                        <small class="text-danger d-none" id="dateError">
+                                                            From date cannot be greater than To date
+                                                        </small>
+                                                    </td>
+                                                    <td data-label="Date">
+                                                        <input type="date" name="to" id="to" class="form-control traditional-input">
                                                     </td>
                                                     <td data-label="Time">
                                                         <input type="time" name="appointment_time" id="appointment_time" class="form-control traditional-input">
@@ -309,6 +332,45 @@ include('../includes/top-header.php');
         }
     });
 </script>
+<script>
+    function addServiceInput() {
+        const container = document.getElementById('customServiceContainer');
+
+        const div = document.createElement('div');
+        div.className = 'custom-service-row-appointment';
+
+        div.innerHTML = `
+        <input type="text" name="services[]" 
+               class="custom-service-input-appointment" 
+               placeholder="Enter service Name">
+        <button type="button" class="remove-btn-appointment" onclick="this.parentElement.remove()">×</button>
+    `;
+
+        container.appendChild(div);
+    }
+
+    // date
+    const fromInput = document.getElementById('from');
+    const toInput = document.getElementById('to');
+    const errorMsg = document.getElementById('dateError');
+
+    function validateDates() {
+        if (fromInput.value && toInput.value) {
+            const fromDate = new Date(fromInput.value);
+            const toDate = new Date(toInput.value);
+
+            if (fromDate > toDate) {
+                errorMsg.classList.remove('d-none');
+                toInput.value = '';
+            } else {
+                errorMsg.classList.add('d-none');
+            }
+        }
+    }
+    fromInput.addEventListener('change', validateDates);
+    toInput.addEventListener('change', validateDates);
+</script>
+
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
 <?php ob_end_flush(); ?>
