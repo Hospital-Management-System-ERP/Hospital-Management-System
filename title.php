@@ -11,6 +11,7 @@
         'appointment-reschedule-cancel' => 'Reschedule or Cancel Appointment',
         'online-appointment' => 'Online Appointment',
         'attendance' => 'Staff Attendance'
+        
     ];
 
     $title = isset($titles[$page]) ? $titles[$page] : 'Home Page';
