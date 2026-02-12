@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // 3. Active Class Management
     // Jab koi link click ho, pehle sabse active hatao, phir naye par lagao
     const allSidebarLinks = document.querySelectorAll('#sidebar-wrapper .list-group-item');
-    
+
     allSidebarLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             // Sirf wahi active rahe jo click hua hai
             allSidebarLinks.forEach(item => item.classList.remove('active'));
             this.classList.add('active');
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // Date and time
-function updateClock(){
+function updateClock() {
     const now = new Date();
     document.getElementById("time").innerText =
         now.toLocaleTimeString('en-IN', { hour12: true });
@@ -51,8 +51,27 @@ function updateClock(){
             day: '2-digit',
             month: 'long',
             year: 'numeric'
-    });
+        });
 }
 
 setInterval(updateClock, 1000);
 updateClock();
+
+
+// counter staff payroll
+const counters = document.querySelectorAll('.counter');
+counters.forEach(counter => {
+    const updateCount = () => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText.replace(/,/g, '');
+        const increment = target / 200;
+
+        if (count < target) {
+            counter.innerText = Math.ceil(count + increment).toLocaleString();
+            setTimeout(updateCount, 10);
+        } else {
+            counter.innerText = target.toLocaleString();
+        }
+    }
+    updateCount();
+});

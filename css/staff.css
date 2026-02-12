@@ -503,54 +503,89 @@
   height: 8px;
   border-radius: 50%;
 }
-
-
-
-
-
-
 /* leave management */
-
 .btn-apply-leave {
-    background: linear-gradient(135deg, #0f5132, #198754);
-    color: #fff;
-    padding-left: 12px;
-      padding-right: 12px;
-    border-radius: 30px;
-    font-weight: 500;
-    text-decoration: none;
-     margin-top: -13px;
-    align-items: center;
-    float: right!important;
-    transition: all 0.3s ease;
-    line-height: 35px!important;
-    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
-
+  background: linear-gradient(135deg, #0f5132, #198754);
+  color: #fff;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 30px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-top: -13px;
+  align-items: center;
+  float: right !important;
+  transition: all 0.3s ease;
+  line-height: 35px !important;
+  box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
 }
-
 .btn-apply-leave i {
-    font-size: 18px;
-    margin-top: 45px!important;
-   
+  font-size: 18px;
+  margin-top: 45px !important;
 }
-
-.search-box i{
-  float: right!important;
-  
-}
-
-#staffSearch1:hover{
-  border-radius: 50px;
-  border: 1px solid #e5e7eb;
-
-}
-
 .btn-apply-leave:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(25, 135, 84, 0.5);
-    background: linear-gradient(135deg, #198754, #157347);
-    color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(25, 135, 84, 0.5);
+  background: linear-gradient(135deg, #198754, #157347);
+  color: #fff;
+}
+/* Payroll apply*/
+.payroll-card {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 15px;
+  background-color: #fff;
+  border-bottom: 3px solid #10874e;
+}
+.payroll-card .payroll-header {
+  font-family: "Jost", sans-serif;
+  color: #000;
+}
+.payroll-card h4 {
+  color: #000;
+  font-family: "Jost", sans-serif;
+}
+.payroll-filter {
+  border-radius: 8px;
+}
+.payroll-filter-btn {
+  background: linear-gradient(135deg, #0f5132, #198754);
+  color: #fff;
+}
+.payroll-filter-btn:hover {
+  background: linear-gradient(135deg, #0f5132, #198754);
+  color: #fff;
+}
+.payroll-card-desktop thead tr th {
+  font-size: 14px;
+}
+.payroll-card-desktop tbody tr td {
+  font-size: 14px;
+  font-family: "Jost", sans-serif;
+}
+.payroll-card-desktop .status-badge {
+  padding: 2px 12px;
+  border-radius: 30px;
+  font-size: 13px;
+}
+.payroll-card-desktop .status-paid {
+  background: #e6f4ea;
+  color: #1e7e34;
+}
+.payroll-card-desktop .status-pending {
+  background: #fff4e5;
+  color: #b54708;
+}
+@media (max-width: 768px) {
+  .payroll-card-desktop {
+    display: none;
+  }
+  .mobile-card-payroll {
+    display: block;
+  }
 }
 
-
-
+@media (min-width: 769px) {
+  .mobile-card-payroll {
+    display: none;
+  }
+}

@@ -11,7 +11,7 @@ $name = $claims['name'];
 $username = $claims['username'] ?? '';
 $permissions = $claims['permissions'] ?? [];
 
-if ($role !== 'admin' && !in_array('staff_attendance', $permissions)) {
+if ($role !== 'admin' && !in_array('staff_leave', $permissions)) {
     http_response_code(403);
     echo "❌ Unauthorized Access";
     exit;
@@ -67,11 +67,11 @@ include('../includes/top-header.php');
                     <p class="staff-details-list">
                         <i class="bi bi-people-fill me-2"></i>
                         Staff Leave Management
-                         <a href="#" class="btn-apply-leave">
-                                <i class="bi bi-plus-circle-fill me-2"></i> Apply Leave
-                            </a>  
+                        <a href="#" class="btn-apply-leave">
+                            <i class="bi bi-plus-circle-fill me-2"></i> Apply Leave
+                        </a>
                     </p>
-                         
+
                     <div class="row">
                         <div class="col-12">
                             <div class="card attendance-card shadow-lg border-0">
@@ -93,12 +93,25 @@ include('../includes/top-header.php');
                                             </div>
                                         </div>
                                         <!-- Filter -->
-                                        <div class="search-box">
-                                            
-                                            <input type="text" id="staffSearch1" class="form-control" placeholder="Search Staff...">
-                                            <i class="bi bi-search text-muted" ></i>
+                                        <!-- Filter -->
+                                        <div class="mt-3 mt-md-0">
+                                            <div class="d-flex gap-2">
+                                                <select class="form-select">
+                                                    <option>January</option>
+                                                    <option>February</option>
+                                                    <option selected>March</option>
+                                                    <option>April</option>
+                                                </select>
+                                                <select class="form-select">
+                                                    <option>2026</option>
+                                                    <option selected>2025</option>
+                                                    <option>2024</option>
+                                                </select>
+                                                <button class="btn btn-primary">
+                                                    <i class="bi bi-funnel"></i>
+                                                </button>
+                                            </div>
                                         </div>
-
                                     </div>
                                     <div class="row g-3 text-center mb-4">
                                         <div class="col-md-4">
