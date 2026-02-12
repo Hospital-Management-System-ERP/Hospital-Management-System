@@ -84,7 +84,7 @@ $sidebarItems = [
     // Staff / HR
     ['title' => 'Add Staff', 'icon' => 'bi-people-fill', 'url' => BASE_URL.'staff/add-staff', 'permission' => 'staff_add', 'parent' => 'Staff'],
     ['title' => 'Staff List', 'icon' => 'bi-people-fill', 'url' => BASE_URL.'staff/staff-list', 'permission' => 'staff_list', 'parent' => 'Staff'],
-    ['title' => 'Attendance', 'icon' => 'bi-people-fill', 'url' => '', 'permission' => 'staff_attendance', 'parent' => 'Staff'],
+    ['title' => 'Attendance', 'icon' => 'bi-people-fill', 'url' => BASE_URL.'staff/attendance', 'permission' => 'staff_attendance', 'parent' => 'Staff'],
     ['title' => 'Leave Management', 'icon' => 'bi-people-fill', 'url' => '', 'permission' => 'staff_leave', 'parent' => 'Staff'],
     ['title' => 'Payroll', 'icon' => 'bi-people-fill', 'url' => '', 'permission' => 'staff_payroll', 'parent' => 'Staff'],
     ['title' => 'Roles & Permissions', 'icon' => 'bi-people-fill', 'url' => '', 'permission' => 'staff_roles_permissions', 'parent' => 'Staff'],

@@ -9,7 +9,8 @@
         'staff-list' => 'Staff List',
         'doctor-wise-schedule' => 'Doctor Wise Schedule',
         'appointment-reschedule-cancel' => 'Reschedule or Cancel Appointment',
-        'online-appointment' => 'Online Appointment'
+        'online-appointment' => 'Online Appointment',
+        'attendance' => 'Staff Attendance'
     ];
 
     $title = isset($titles[$page]) ? $titles[$page] : 'Home Page';

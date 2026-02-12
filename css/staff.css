@@ -443,10 +443,63 @@
   font-size: 11px;
   padding: 4px 6px;
 }
-.staff-details-list{
+.staff-details-list {
   font-size: 13px;
   border-bottom: 1px solid #374151;
   border-radius: 0px 0px 7px 7px;
   padding: 0px 10px 10px 10px;
   letter-spacing: 0.5px;
+}
+.attendance-card {
+  border-radius: 8px;
+}
+.attendance-card .staff-img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+.attendance-card .summary-box {
+  border-radius: 10px;
+  transition: 0.3s;
+}
+.attendance-card .summary-box:hover {
+  transform: translateY(-3px);
+}
+.attendance-card .table thead th {
+  background: #10874e;
+  color: #fff;
+  font-size: 14px;
+}
+.attendance-card .table tbody td {
+  font-size: 13px;
+}
+.attendance-card .status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 14px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.attendance-card .badge-present {
+  background: #e6f7ee;
+  color: #1b7a4b;
+}
+.attendance-card .badge-absent {
+  background: #fdeaea;
+  color: #b42318;
+}
+.attendance-card .badge-late {
+  background: #fff4e5;
+  color: #b54708;
+}
+.attendance-card .badge-leave {
+  background: #e7f1ff;
+  color: #175cd3;
+}
+.attendance-card .status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
 }
