@@ -12,7 +12,8 @@
         'online-appointment' => 'Online Appointment',
         'attendance' => 'Staff Attendance',
         'leave-management' => 'Leave Management',
-        'staff_payroll' => 'Staff Payroll'
+        'staff_payroll' => 'Staff Payroll',
+        'roles-and-permission' => 'Roles and Permission'
     ];
 
     $title = isset($titles[$page]) ? $titles[$page] : 'Home Page';

@@ -2,233 +2,216 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Staff Payroll Management</title>
-
-<!-- Bootstrap 5 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Card with Lining Background</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Bootstrap Icons -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
 <style>
-body{
-    background:#f4f6f9;
-}
-
-.payroll-card{
-    border:0;
-    border-radius:18px;
-    transition:0.3s ease;
-}
-.payroll-card:hover{
-    transform:translateY(-5px);
-}
-
-.payroll-header{
-    font-weight:600;
-    color:#555;
-}
-
-.table thead{
-    background:#f1f3f6;
-}
-
-.status-badge{
-    padding:6px 12px;
-    border-radius:20px;
-    font-size:13px;
-}
-
-.status-paid{
-    background:#e6f4ea;
-    color:#1e7e34;
-}
-
-.status-pending{
-    background:#fff4e5;
-    color:#b54708;
-}
-
-@media(max-width:768px){
-    .table{
-        display:none;
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Segoe UI', sans-serif;
     }
-    .mobile-card{
-        display:block;
-    }
-}
 
-@media(min-width:769px){
-    .mobile-card{
-        display:none;
+    .staff-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        padding: 15px;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.2s, box-shadow 0.2s;
     }
-}
+
+    .staff-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: repeating-linear-gradient(
+            45deg,
+            rgba(0,0,0,0.03) 0,
+            rgba(0,0,0,0.03) 1px,
+            transparent 1px,
+            transparent 8px
+        );
+        border-radius: 15px;
+        pointer-events: none;
+    }
+
+    .staff-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .staff-image img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ddd;
+        z-index: 1;
+        position: relative;
+    }
+
+    .staff-info {
+        flex: 1;
+        margin-left: 15px;
+        z-index: 1;
+        position: relative;
+    }
+
+    .staff-info h5 {
+        font-weight: 600;
+        margin-bottom: 3px;
+    }
+
+    .staff-info p {
+        margin-bottom: 3px;
+        color: #6c757d;
+        font-size: 0.95rem;
+    }
+
+    .roles {
+        margin-top: 5px;
+    }
+
+    .role-badge {
+        font-size: 0.8rem;
+        margin-right: 5px;
+        margin-top: 3px;
+    }
+
+    .permissions-box {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 8px;
+        z-index: 1;
+        position: relative;
+    }
+
+    .permission-tag {
+        background-color: #e0e7ff;
+        color: #1e40af;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        z-index: 1;
+        position: relative;
+    }
+
+    @media (max-width: 768px) {
+        .staff-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .staff-info {
+            margin-left: 0;
+            margin-top: 10px;
+        }
+        .actions {
+            flex-direction: row;
+            width: 100%;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        .actions .btn {
+            flex: 1;
+        }
+    }
 </style>
 </head>
 <body>
 
-<div class="container-fluid py-4">
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Staff Cards with Lining Background</h2>
 
-    <!-- Page Title -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="fw-bold"><i class="bi bi-cash-coin me-2"></i>Staff Payroll Management</h4>
-        <button class="btn btn-primary">
-            <i class="bi bi-plus-circle me-2"></i>Generate Payroll
-        </button>
-    </div>
+    <!-- Horizontal Card -->
+    <div class="staff-card mb-3">
+        <!-- Left: Image -->
+        <div class="staff-image">
+            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Ashraf Ali">
+        </div>
 
-    <!-- Summary Cards -->
-    <div class="row g-3 mb-4">
-        <div class="col-6 col-md-3">
-            <div class="card payroll-card shadow-sm p-3 bg-primary bg-opacity-10">
-                <div class="payroll-header">Total Staff</div>
-                <h4 class="fw-bold mt-2">42</h4>
+        <!-- Center: Info -->
+        <div class="staff-info">
+            <h5>Ashraf Ali</h5>
+            <p><strong>Username:</strong> ashraf123</p>
+            <p><strong>Email:</strong> ashraf@example.com</p>
+
+            <!-- Roles -->
+            <div class="roles">
+                <span class="badge bg-success role-badge">Admin</span>
+                <span class="badge bg-info text-dark role-badge">Nurse</span>
+                <span class="badge bg-warning text-dark role-badge">Editor</span>
+            </div>
+
+            <!-- Permissions -->
+            <div class="permissions-box">
+                <div class="permission-tag">Manage Users</div>
+                <div class="permission-tag">View Reports</div>
+                <div class="permission-tag">Edit Roles</div>
+                <div class="permission-tag">View Schedule</div>
+                <div class="permission-tag">Edit Nursing Notes</div>
+                <div class="permission-tag">Update Patient Vitals</div>
+                <div class="permission-tag">Edit Articles</div>
+                <div class="permission-tag">Publish Articles</div>
             </div>
         </div>
 
-        <div class="col-6 col-md-3">
-            <div class="card payroll-card shadow-sm p-3 bg-success bg-opacity-10">
-                <div class="payroll-header">Total Payroll</div>
-                <h4 class="fw-bold mt-2">₹ 4,25,000</h4>
-            </div>
-        </div>
-
-        <div class="col-6 col-md-3">
-            <div class="card payroll-card shadow-sm p-3 bg-info bg-opacity-10">
-                <div class="payroll-header">Paid</div>
-                <h4 class="fw-bold mt-2">₹ 3,80,000</h4>
-            </div>
-        </div>
-
-        <div class="col-6 col-md-3">
-            <div class="card payroll-card shadow-sm p-3 bg-danger bg-opacity-10">
-                <div class="payroll-header">Pending</div>
-                <h4 class="fw-bold mt-2">₹ 45,000</h4>
-            </div>
-        </div>
-    </div>
-
-    <!-- Filters -->
-    <div class="card shadow-sm mb-4 p-3">
-        <div class="row g-3">
-            <div class="col-md-3">
-                <select class="form-select">
-                    <option selected>March</option>
-                    <option>April</option>
-                    <option>May</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <select class="form-select">
-                    <option selected>2025</option>
-                    <option>2024</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <select class="form-select">
-                    <option selected>All Departments</option>
-                    <option>Nursing</option>
-                    <option>Accounts</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-dark w-100">
-                    <i class="bi bi-funnel me-2"></i>Filter
-                </button>
-            </div>
+        <!-- Right: Actions -->
+        <div class="actions">
+            <button class="btn btn-sm btn-warning">Edit</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
         </div>
     </div>
 
-    <!-- Payroll Table -->
-    <div class="card shadow-sm p-3">
-        <div class="table-responsive">
-            <table class="table align-middle">
-                <thead>
-                    <tr>
-                        <th>Staff</th>
-                        <th>Basic</th>
-                        <th>Allowance</th>
-                        <th>Deduction</th>
-                        <th>Net Salary</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img src="https://i.pravatar.cc/40" class="rounded-circle me-2">
-                                Ashraf Ali
-                            </div>
-                        </td>
-                        <td>₹ 25,000</td>
-                        <td>₹ 3,000</td>
-                        <td>₹ 1,500</td>
-                        <td class="fw-bold text-success">₹ 26,500</td>
-                        <td><span class="status-badge status-paid">Paid</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#slipModal">
-                                View Slip
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- Another Horizontal Card -->
+    <div class="staff-card mb-3">
+        <div class="staff-image">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Rahul Sharma">
+        </div>
+        <div class="staff-info">
+            <h5>Dr. Rahul Sharma</h5>
+            <p><strong>Username:</strong> drrahul</p>
+            <p><strong>Email:</strong> rahul@example.com</p>
+
+            <div class="roles">
+                <span class="badge bg-primary role-badge">Doctor</span>
+                <span class="badge bg-warning text-dark role-badge">Manager</span>
+            </div>
+
+            <div class="permissions-box">
+                <div class="permission-tag">View Patient Records</div>
+                <div class="permission-tag">Write Prescription</div>
+                <div class="permission-tag">Order Lab Tests</div>
+                <div class="permission-tag">Approve Requests</div>
+                <div class="permission-tag">View Reports</div>
+                <div class="permission-tag">Assign Tasks</div>
+                <div class="permission-tag">Edit Schedule</div>
+                <div class="permission-tag">Manage Department</div>
+            </div>
         </div>
 
-        <!-- Mobile Card -->
-        <div class="mobile-card mt-3">
-            <div class="card shadow-sm p-3 mb-3">
-                <h6 class="fw-bold">Ashraf Ali</h6>
-                <div>Basic: ₹25,000</div>
-                <div>Allowance: ₹3,000</div>
-                <div>Deduction: ₹1,500</div>
-                <div class="fw-bold text-success">Net: ₹26,500</div>
-                <button class="btn btn-sm btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#slipModal">
-                    View Slip
-                </button>
-            </div>
+        <div class="actions">
+            <button class="btn btn-sm btn-warning">Edit</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
         </div>
     </div>
 
-</div>
-
-<!-- Salary Slip Modal -->
-<div class="modal fade" id="slipModal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Salary Slip - March 2025</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <h6 class="fw-bold">Ashraf Ali</h6>
-        <hr>
-        <div class="row">
-            <div class="col-md-6">
-                <h6>Earnings</h6>
-                <p>Basic: ₹25,000</p>
-                <p>Allowance: ₹3,000</p>
-            </div>
-            <div class="col-md-6">
-                <h6>Deductions</h6>
-                <p>PF: ₹1,000</p>
-                <p>Other: ₹500</p>
-            </div>
-        </div>
-        <hr>
-        <h5 class="text-end fw-bold text-success">Net Salary: ₹26,500</h5>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success"><i class="bi bi-download me-2"></i>Download PDF</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

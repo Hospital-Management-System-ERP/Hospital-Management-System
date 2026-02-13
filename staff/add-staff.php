@@ -502,7 +502,7 @@ include('../includes/top-header.php');
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <input type="text" name="salary" id="salary" class="form-input" required>
-                                        <label>Salary <sup><span style="color: red;">*</span></sup></label>
+                                        <label>Basic Salary <sup><span style="color: red;">*</span></sup></label>
                                     </div>
 
                                     <div id="salaryBreakdownContainer">

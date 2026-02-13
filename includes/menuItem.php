@@ -87,7 +87,7 @@ $sidebarItems = [
     ['title' => 'Attendance', 'icon' => 'bi-people-fill', 'url' => BASE_URL.'staff/attendance', 'permission' => 'staff_attendance', 'parent' => 'Staff'],
     ['title' => 'Leave Management', 'icon' => 'bi-people-fill', 'url' => BASE_URL.'staff/leave-management', 'permission' => 'staff_leave', 'parent' => 'Staff'],
     ['title' => 'Payroll', 'icon' => 'bi-people-fill', 'url' => BASE_URL.'staff/staff_payroll', 'permission' => 'staff_payroll', 'parent' => 'Staff'],
-    ['title' => 'Roles & Permissions', 'icon' => 'bi-people-fill', 'url' => '', 'permission' => 'staff_roles_permissions', 'parent' => 'Staff'],
+    ['title' => 'Roles & Permissions', 'icon' => 'bi-people-fill', 'url' => BASE_URL.'staff/roles-and-permission', 'permission' => 'staff_roles_permissions', 'parent' => 'Staff'],
 
     // Inventory
     ['title' => 'Medical Equipment', 'icon' => 'bi-box-seam', 'url' => '', 'permission' => 'inventory_equipment', 'parent' => 'Inventory'],
