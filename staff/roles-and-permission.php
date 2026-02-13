@@ -68,52 +68,6 @@ include('../includes/top-header.php');
                         <i class="bi bi-people-fill me-2"></i>
                         Staff Roles & Permissions Details
                     </p>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="staff-info d-flex flex-wrap gap-3">
-                                <div class="staff-card d-flex">
-                                    <div class="staff-img">
-                                        <img src="img/profile.png" alt="John Doe">
-                                    </div>
-                                    <div class="staff-details d-flex flex-column justify-content-between">
-                                        <div class="staff-info-top">
-                                            <h5 class="staff-name">John Doe</h5>
-                                            <p class="staff-role">Admin</p>
-                                            <p class="staff-email">Email: john@example.com</p>
-                                            <p class="staff-phone">Phone: +91 9934104210</p>
-                                            <p>Status: <span class="staff-status active">Active</span></p>
-                                        </div>
-                                        <div class="staff-actions">
-                                            <button class="btn btn-sm btn-primary">View Details</button>
-                                            <button class="btn btn-sm btn-warning">Edit Details</button>
-                                            <button class="btn btn-sm btn-danger">Delete</button>
-                                            <button class="btn btn-sm btn-secondary">Toggle Status</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="staff-card d-flex">
-                                    <div class="staff-img">
-                                        <img src="img/profile.png" alt="Jane Smith">
-                                    </div>
-                                    <div class="staff-details d-flex flex-column justify-content-between">
-                                        <div class="staff-info-top">
-                                            <h5 class="staff-name">Asraf Ali</h5>
-                                            <p class="staff-role">Accountant</p>
-                                            <p class="staff-email">Email: john@example.com</p>
-                                            <p class="staff-phone">Phone: +91 9934104210</p>
-                                            <p>Status: <span class="staff-status inactive">Inactive</span></p>
-                                        </div>
-                                        <div class="staff-actions">
-                                            <button class="btn btn-sm btn-primary">View Details</button>
-                                            <button class="btn btn-sm btn-warning">Edit Details</button>
-                                            <button class="btn btn-sm btn-danger">Delete</button>
-                                            <button class="btn btn-sm btn-secondary">Toggle Status</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

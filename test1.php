@@ -176,42 +176,7 @@
             <button class="btn btn-sm btn-danger">Delete</button>
         </div>
     </div>
-
-    <!-- Another Horizontal Card -->
-    <div class="staff-card mb-3">
-        <div class="staff-image">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Rahul Sharma">
-        </div>
-        <div class="staff-info">
-            <h5>Dr. Rahul Sharma</h5>
-            <p><strong>Username:</strong> drrahul</p>
-            <p><strong>Email:</strong> rahul@example.com</p>
-
-            <div class="roles">
-                <span class="badge bg-primary role-badge">Doctor</span>
-                <span class="badge bg-warning text-dark role-badge">Manager</span>
-            </div>
-
-            <div class="permissions-box">
-                <div class="permission-tag">View Patient Records</div>
-                <div class="permission-tag">Write Prescription</div>
-                <div class="permission-tag">Order Lab Tests</div>
-                <div class="permission-tag">Approve Requests</div>
-                <div class="permission-tag">View Reports</div>
-                <div class="permission-tag">Assign Tasks</div>
-                <div class="permission-tag">Edit Schedule</div>
-                <div class="permission-tag">Manage Department</div>
-            </div>
-        </div>
-
-        <div class="actions">
-            <button class="btn btn-sm btn-warning">Edit</button>
-            <button class="btn btn-sm btn-danger">Delete</button>
-        </div>
-    </div>
-
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
