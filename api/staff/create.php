@@ -158,6 +158,13 @@ try {
         echo json_encode(['success' => false, 'status' => 'error', 'message' => 'Password Required']);
         return;
     }
+    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/', $password)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Password must contain uppercase, lowercase, number and special character (min 6 characters)'
+        ]);
+        exit;
+    }
     $password = password_hash($password, PASSWORD_DEFAULT);
     $access = array_map('intval', $_POST['access'] ?? []);
     $status = 1;
@@ -291,7 +298,7 @@ try {
     if ($role !== 'admin' && !empty($access)) {
 
         $stmt = $conn->prepare("
-        INSERT INTO staff_permission(staff_id, permission_id)
+        INSERT INTO staff_permissions(staff_id, permission_id)
         VALUES (?, ?)
     ");
         foreach ($access as $permission_id) {

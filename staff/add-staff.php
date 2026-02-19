@@ -713,7 +713,12 @@ include('../includes/top-header.php');
                     data[field.name] = field.value;
                 }
             } else if (field.type === "checkbox") {
-                data[field.name] = field.checked;
+                if (!data[field.name]) {
+                    data[field.name] = [];
+                }
+                if (field.checked) {
+                    data[field.name].push(field.value);
+                }
             } else {
                 data[field.name] = field.value;
             }
@@ -733,97 +738,69 @@ include('../includes/top-header.php');
             ["state", "p_state"],
             ["pincode", "p_pincode"]
         ];
+
         const savedData = localStorage.getItem("staffFormData");
+
         if (savedData) {
             const data = JSON.parse(savedData);
 
             Object.keys(data).forEach(name => {
                 if (name === "csrf_token") return;
-                const field = form.querySelector(`[name="${name}"]`);
-                if (!field) return;
 
-                if (field.type === "radio") {
-                    const radio = form.querySelector(`input[name="${name}"][value="${data[name]}"]`);
-                    if (radio) radio.checked = true;
-                } else if (field.type === "checkbox") {
-                    if (Array.isArray(data[name])) {
-                        field.checked = data[name].includes(field.value);
-                    } else {
-                        field.checked = data[name];
-                    }
-                } else {
-                    field.value = data[name];
-                }
-            });
-            if (savedData) {
-                const data = JSON.parse(savedData);
+                const fields = form.querySelectorAll(`[name="${name}"]`);
+                if (!fields.length) return;
 
-                Object.keys(data).forEach(name => {
-                    const field = form.querySelector(`[name="${name}"]`);
-                    if (!field) return;
-
+                fields.forEach(field => {
                     if (field.type === "radio") {
-                        const radio = form.querySelector(`input[name="${name}"][value="${data[name]}"]`);
-                        if (radio) radio.checked = true;
+                        field.checked = field.value === data[name];
                     } else if (field.type === "checkbox") {
-                        field.checked = data[name];
+                        if (Array.isArray(data[name])) {
+                            field.checked = data[name].includes(field.value);
+                        } else {
+                            field.checked = data[name];
+                        }
                     } else {
                         field.value = data[name];
                     }
                 });
-                sameAddress.addEventListener("change", function() {
-                    if (this.checked) {
-                        addressMap.forEach(([from, to]) => {
-                            const fromEl = document.getElementById(from);
-                            const toEl = document.getElementById(to);
-                            if (fromEl && toEl) {
-                                toEl.value = fromEl.value;
-                                toEl.readOnly = true;
-                                toEl.style.background = "#f1f1f1";
-                            }
-                        });
-                    } else {
-                        addressMap.forEach(([_, to]) => {
-                            const toEl = document.getElementById(to);
-                            if (toEl) {
-                                toEl.readOnly = false;
-                                toEl.style.background = "";
-                            }
-                        });
-                    }
-                    const formData = JSON.parse(localStorage.getItem("staffFormData") || "{}");
-                    formData.sameAddress = this.checked;
-                    localStorage.setItem("staffFormData", JSON.stringify(formData));
-                });
-
+            });
+            // Restore sameAddress state
+            if (data.sameAddress) {
+                sameAddress.checked = true;
+                copyAddress();
             }
         }
-        sameAddress.addEventListener("change", function() {
-            if (this.checked) {
-                addressMap.forEach(([from, to]) => {
-                    const fromEl = document.getElementById(from);
-                    const toEl = document.getElementById(to);
-                    if (fromEl && toEl) {
-                        toEl.value = fromEl.value;
-                        toEl.readOnly = true;
-                        toEl.style.background = "#f1f1f1";
+        function copyAddress() {
+            addressMap.forEach(([from, to]) => {
+                const fromEl = document.getElementById(from);
+                const toEl = document.getElementById(to);
+                if (!fromEl || !toEl) return;
+                if (sameAddress.checked) {
+                    toEl.value = fromEl.value;
+                    if (toEl.tagName === "SELECT") {
+                        toEl.style.pointerEvents = "none";
+                    } else {
+                        toEl.readOnly = true; 
                     }
-                });
-            } else {
-                addressMap.forEach(([_, to]) => {
-                    const toEl = document.getElementById(to);
-                    if (toEl) {
+                    toEl.style.background = "#f1f1f1";
+                } else {
+                    if (toEl.tagName === "SELECT") {
+                        toEl.style.pointerEvents = "";
+                    } else {
                         toEl.readOnly = false;
-                        toEl.style.background = "";
                     }
-                });
-            }
+                    toEl.style.background = "";
+                }
+            });
+        }
+        sameAddress.addEventListener("change", function() {
+            copyAddress();
+
             const formData = JSON.parse(localStorage.getItem("staffFormData") || "{}");
             formData.sameAddress = this.checked;
             localStorage.setItem("staffFormData", JSON.stringify(formData));
         });
     });
-
     const addBtn = document.getElementById("addSalaryRow");
     const container = document.getElementById("salaryBreakdownContainer");
 
@@ -986,11 +963,14 @@ include('../includes/top-header.php');
         const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/;
 
         if (!strongRegex.test(pass)) {
-            showToast("Password must be at least 6 characters with uppercase, lowercase, number & special character");
-            document.getElementById("pass").focus();
+            showToast("Password must be at least 6 characters with uppercase, lowercase, number and special character");
             return;
         }
-
+        if (!cnf) {
+            showToast("Please confirm your password");
+            document.getElementById("cnf_password").focus();
+            return;
+        }
         if (pass !== cnf) {
             showToast("Passwords do not match");
             document.getElementById("cnf_password").focus();

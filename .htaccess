@@ -1,8 +1,8 @@
-# Enable rewrite engine
 RewriteEngine On
 
-# Remove .php extension from URL
+# If file or directory exists, do nothing
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
 
+# Rewrite everything to .php
+RewriteRule ^(.+)$ $1.php [L]
