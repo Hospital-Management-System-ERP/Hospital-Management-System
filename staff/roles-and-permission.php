@@ -68,6 +68,46 @@ include('../includes/top-header.php');
                         <i class="bi bi-people-fill me-2"></i>
                         Staff Roles & Permissions Details
                     </p>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="staff-permission-card mb-3">
+                                <!-- Left: Image -->
+                                <div class="staff-image">
+                                    <img src="img/profile.png" alt="Ashraf Ali">
+                                </div>
+                                <!-- Center: Info -->
+                                <div class="staff-info">
+                                    <h5>Ashraf Ali</h5>
+                                    <p><strong>Username:</strong> ashraf123</p>
+                                    <p><strong>Email:</strong> ashraf@example.com</p>
+                                    <!-- Roles -->
+                                    <div class="roles">
+                                        <span class="badge bg-success role-badge">Admin</span>
+                                    </div>
+                                    <!-- Permissions -->
+                                    <div class="permissions-box">
+                                        <div class="permission-tag"><i class="bi bi-unlock"></i> Manage Users</div>
+                                        <div class="permission-tag"><i class="bi bi-unlock"></i> View Reports</div>
+                                        <div class="permission-tag"><i class="bi bi-unlock"></i> Edit Roles</div>
+                                        <div class="permission-tag"><i class="bi bi-unlock"></i> View Schedule</div>
+                                        <div class="permission-tag"><i class="bi bi-unlock"></i> Edit Nursing Notes</div>
+                                        <div class="permission-tag"><i class="bi bi-unlock"></i> Update Patient Vitals</div>
+                                        <div class="permission-tag"><i class="bi bi-unlock"></i> Edit Articles</div>
+                                        <div class="permission-tag"><i class="bi bi-unlock"></i> Publish Articles</div>
+                                    </div>
+                                </div>
+                                <!-- Right: Actions -->
+                                <div class="actions">
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil-square"></i> Edit Roles / Permissions
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -75,3 +75,36 @@ counters.forEach(counter => {
     }
     updateCount();
 });
+
+// Staff Image Preview
+document.getElementById('adhar').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const fileType = file.type;
+    const fileURL = URL.createObjectURL(file);
+    const previewContainer = document.getElementById('previewContainer');
+    const imageWrapper = document.getElementById('imageWrapper');
+    const pdfWrapper = document.getElementById('pdfWrapper');
+    const imagePreview = document.getElementById('imagePreview');
+    const pdfDownload = document.getElementById('pdfDownload');
+    // Reset
+    previewContainer.classList.add('d-none');
+    imageWrapper.classList.add('d-none');
+    pdfWrapper.classList.add('d-none');
+    previewContainer.classList.remove('d-none');
+    // If Image
+    if (fileType.startsWith('image/')) {
+        imagePreview.src = fileURL;
+        imageWrapper.classList.remove('d-none');
+    }
+    // If PDF
+    else if (fileType === 'application/pdf') {
+        pdfDownload.href = fileURL;
+        pdfDownload.setAttribute("download", file.name);
+        pdfWrapper.classList.remove('d-none');
+    }
+    else {
+        alert("Only PDF, JPG, PNG allowed");
+        previewContainer.classList.add('d-none');
+    }
+});

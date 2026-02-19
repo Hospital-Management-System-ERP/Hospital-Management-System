@@ -40,7 +40,7 @@ $roleTableMap = [
     'ot_coordinator' => ['table' => 'tbl_staff', 'hasRole' => true],
     'ambulance_coordinator' => ['table' => 'tbl_staff', 'hasRole' => true],
     'inventory_manager' => ['table' => 'tbl_staff', 'hasRole' => true],
-    'patient' => ['table' => 'tbl_staff', 'hasRole' => true]
+    'patient' => ['table' => 'tbl_patient', 'hasRole' => true]
 ];
 
 if (!isset($roleTableMap[$role])) {
@@ -111,9 +111,9 @@ $payload = [
     'table' => $table,
     'permissions' => $permissions
 ];
-if ($config['hasRole']) {
-    $payload['permissions'] = $permissions;
-}
+// if ($config['hasRole']) {
+//     $payload['permissions'] = $permissions;
+// }
 
 $jwt = JWT::encode($payload, JWT_SECRET, JWT_ALGO);
 // $_SESSION['jwt'] = $jwt;

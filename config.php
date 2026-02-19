@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
+
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
@@ -27,7 +28,6 @@ try {
     error_log($e->getMessage());
     die('Database Connection Failed');
 }
-
 $envKey = getenv('APP_SECRET_KEY') ?: $_ENV['APP_SECRET_KEY'] ?? null;
 if (!$envKey || strlen($envKey) < 32) {
     $secret_key = bin2hex(random_bytes(32));
@@ -35,3 +35,8 @@ if (!$envKey || strlen($envKey) < 32) {
 } else {
     $secret_key = $envKey;
 }
+// $secret_key = $_ENV['APP_SECRET_KEY'] ?? null;
+
+// if (!$secret_key || strlen($secret_key) < 32) {
+//     die("APP_SECRET_KEY missing or too short in .env file");
+// }

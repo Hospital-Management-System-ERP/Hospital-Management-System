@@ -1,6 +1,9 @@
 <?php
-
 declare(strict_types=1);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once __DIR__ . '/../../config.php';
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -17,8 +20,9 @@ function login_url(): string
 }
 function require_auth(array $allowedRoles = []): array
 {
-    session_start();
-
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     $token = $_COOKIE[COOKIE_NAME] ?? '';
     $login_url = login_url();
 

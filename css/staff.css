@@ -589,5 +589,195 @@
     display: none;
   }
 }
-
 /* Roles & Permission start by neha */
+.staff-permission-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 15px;
+  border-left: 3px solid #10874e;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  padding: 15px;
+  position: relative;
+  overflow: hidden;
+}
+.staff-permission-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.03) 0,
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+  border-radius: 15px;
+  pointer-events: none;
+}
+.staff-permission-card .staff-image {
+  flex-shrink: 0;
+}
+.staff-permission-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+.staff-permission-card .staff-info {
+  flex: 1;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 0.5;
+}
+.staff-permission-card .staff-info h5 {
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+.staff-permission-card .staff-info p {
+  margin-bottom: 1px;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+.staff-permission-card .roles {
+  margin-top: 0px;
+}
+.staff-permission-card .role-badge {
+  font-size: 0.8rem;
+  margin-right: 5px;
+  margin-top: 0px;
+}
+.staff-permission-card .permissions-box {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 5px;
+}
+.staff-permission-card .permission-tag {
+  background-color: #e0e7ff;
+  color: #1e40af;
+  padding: 10px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+.staff-permission-card .permission-tag i {
+  margin-right: 3px;
+  color: #1e40af;
+  font-size: 0.8rem;
+}
+.staff-permission-card .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: auto;
+}
+.staff-permission-card .actions .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 6px 14px;
+  transition: all 0.2s ease-in-out;
+}
+.staff-permission-card .actions .btn-warning {
+  background-color: #10874e;
+  border: none;
+  color: #fff;
+}
+.staff-permission-card .actions .btn-warning:hover {
+  background-color: #0f5132;
+}
+.staff-permission-card .actions .btn-danger {
+  background-color: #dc2626;
+  border: none;
+  color: #fff;
+}
+.staff-permission-card .actions .btn-danger:hover {
+  background-color: #b91c1c;
+}
+@media (max-width: 768px) {
+  .staff-permission-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .staff-permission-card .staff-info {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+  .staff-permission-card .actions {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+  .staff-permission-card .actions .btn {
+    flex: 1;
+  }
+}
+.add-staff-form .preview-card {
+  position: relative;
+  margin-top: 5px!important;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-staff-form .preview-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.add-staff-form .pdf-icon {
+  font-size: 35px;
+}
+.add-staff-form .status-check {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #28a745;
+  color: #fff;
+  font-size: 13px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-staff-form .remove-btn-staff {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  background: #dc3545!important;
+  color: white;
+  border: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+}
+.add-staff-form .view-btn {
+  font-size: 13px;
+  color: #0d6efd;
+  text-decoration: underline;
+}
+.add-staff-form .pdf-details {
+    display: flex;
+    flex-direction: column;
+}

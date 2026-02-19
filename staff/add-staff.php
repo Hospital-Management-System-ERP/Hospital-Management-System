@@ -1,11 +1,18 @@
 <?php
 ob_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require __DIR__ . '/../api/login/auth.php';
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 header("Expires: 0");
-require __DIR__ . '/../api/login/auth.php';
+
 $claims = require_auth();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 $role = $claims['role'];
 $name = $claims['name'];
 $username = $claims['username'] ?? '';
@@ -16,7 +23,6 @@ if ($role !== 'admin' && !in_array('staff_add', $permissions)) {
     echo "❌ Unauthorized Access";
     exit;
 }
-
 include('../includes/header.php');
 include('../includes/sidebar.php');
 include('../includes/top-header.php');
@@ -84,7 +90,8 @@ include('../includes/top-header.php');
                 <div class="appointment-form add-staff-form mt-3">
                     <span class="corner tr"></span>
                     <span class="corner bl"></span>
-                    <form id="staffForm">
+                    <form id="staffForm" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                         <div id="step-1" class="step-section active" data-step="1">
                             <div class="row">
                                 <div class="col-12 col-lg-3 col-md-6">
@@ -95,7 +102,7 @@ include('../includes/top-header.php');
                                 </div>
                                 <div class="col-12 col-lg-3 col-md-6">
                                     <div class="form-group">
-                                        <input type="text" name="lname" id="last_name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" class="form-input">
+                                        <input type="text" name="last_name" id="last_name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" class="form-input">
                                         <label for="last_name">Last Name</label>
                                     </div>
                                 </div>
@@ -412,7 +419,6 @@ include('../includes/top-header.php');
                                             <option value="" disabled selected hidden>--Select Role--</option>
                                             <option value="admin">Admin</option>
                                             <option value="accountant">Accountant</option>
-                                            <option value="doctor">Doctor</option>
                                             <option value="nurse">Nurse</option>
                                             <option value="laboratory">Laboratory</option>
                                             <option value="pharmacy">Pharmacy</option>
@@ -431,7 +437,7 @@ include('../includes/top-header.php');
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <select name="emp_type" id="emp_type" class="form-input" required>
-                                            <option value="" disabled selected hidden>--Select Employee Type--</option>
+                                            <option value="" disabled selected>--Select Employee Type--</option>
                                             <option value="permanent">Permanent</option>
                                             <option value="contract">Contract</option>
                                             <option value="probation">Probation</option>
@@ -489,7 +495,7 @@ include('../includes/top-header.php');
 
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group">
-                                        <select name="emp_type" id="emp_type" class="form-input" required>
+                                        <select name="pay_cycle" id="pay_cycle" class="form-input" required>
                                             <option value="" disabled selected hidden>--Select Paycycle--</option>
                                             <option value="monthly">Monthly</option>
                                             <option value="fortnightly">Fortnightly</option>
@@ -530,27 +536,31 @@ include('../includes/top-header.php');
                                         <input type="file" name="adhar" id="adhar" class="form-input" accept=".pdf,.jpg,.jpeg,.png">
                                         <label for="adhar">Upload Aadhar (PDF/JPG/PNG)</label>
                                     </div>
+                                    <div class="preview-area"></div>
                                 </div>
 
                                 <div class="col-12 col-lg-3">
                                     <div class="form-group custom-file-input">
                                         <input type="file" name="certificate" id="certificate" class="form-input" accept=".pdf,.jpg,.jpeg,.png">
-                                        <label for="adhar">Upload Certificate</label>
+                                        <label for="certificate">Upload Certificate</label>
                                     </div>
+                                    <div class="preview-area"></div>
                                 </div>
 
                                 <div class="col-12 col-lg-3">
                                     <div class="form-group custom-file-input">
                                         <input type="file" name="experience_letter" id="experience_letter" class="form-input" accept=".pdf,.jpg,.jpeg,.png">
-                                        <label for="adhar">Upload Experience Letter</label>
+                                        <label for="experience_letter">Upload Experience Letter</label>
                                     </div>
+                                    <div class="preview-area"></div>
                                 </div>
 
                                 <div class="col-12 col-lg-3">
                                     <div class="form-group custom-file-input">
                                         <input type="file" name="image" id="image" class="form-input" accept=".jpg,.jpeg,.png">
-                                        <label for="adhar">Upload Passport Size Image</label>
+                                        <label for="image">Upload Passport Size Image</label>
                                     </div>
+                                    <div class="preview-area"></div>
                                 </div>
                             </div>
                             <div class="row">
@@ -564,23 +574,25 @@ include('../includes/top-header.php');
                             <div class="row">
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group custom-file-input">
-                                        <input type="text" name="username" id="username" class="form-input">
+                                        <input type="text" name="username" id="username" class="form-input" required>
                                         <label for="adhar">Username <sup><span style="color: red;">*</span></sup></label>
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group custom-file-input">
-                                        <input type="password" name="password" id="pass" class="form-input">
-                                        <label for="adhar">Password <sup><span style="color: red;">*</span></sup></label>
+                                        <input type="password" name="password" id="pass" minlength="6"
+                                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$" class="form-input" required>
+                                        <label for="password">Password <sup><span style="color: red;">*</span></sup></label>
                                         <span class="toggle-pass" onclick="togglePassword('pass')">Show</span>
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group custom-file-input">
-                                        <input type="password" name="cnf_password" id="cnf_password" class="form-input">
-                                        <label for="adhar">confirm Password <sup><span style="color: red;">*</span></sup></label>
+                                        <input type="password" name="cnf_password" id="cnf_password" minlength="6"
+                                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$" class="form-input" required>
+                                        <label for="confirmpassword">confirm Password <sup><span style="color: red;">*</span></sup></label>
                                         <span class="toggle-pass" onclick="togglePassword('cnf_password')">Show</span>
                                     </div>
                                 </div>
@@ -613,7 +625,7 @@ include('../includes/top-header.php');
                             <div class="row">
                                 <div class="col-12 d-flex justify-content-end gap-2">
                                     <button type="button" onclick="prevStep()" class="btn-prev">⬅ Previous</button>
-                                    <button type="submit" onclick="finalSubmit()" class="btn-next"><i class="bi bi-send-fill me-2"></i>Submit</button>
+                                    <button type="button" class="btn-next" onclick="finalSubmit()"><i class="bi bi-send-fill me-2"></i>Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -644,7 +656,6 @@ include('../includes/top-header.php');
                 parseInt(sec.dataset.step) === step
             );
         });
-
         stepBtns.forEach(btn => {
             const btnStep = parseInt(btn.dataset.step);
 
@@ -660,61 +671,11 @@ include('../includes/top-header.php');
                 btn.disabled = false;
             }
         });
-
         stepLines.forEach((line, i) => {
             line.classList.toggle("filled", i < completedStep - 1);
         });
 
         localStorage.setItem("currentStep", step);
-    }
-
-    function nextStep() {
-        const currentSection = document.querySelector(`#step-${currentStep}`);
-        const requiredFields = currentSection.querySelectorAll("[required]");
-
-        for (let field of requiredFields) {
-            if (field.type === "radio") {
-                const radios = currentSection.querySelectorAll(`input[name="${field.name}"]`);
-                const isChecked = Array.from(radios).some(r => r.checked);
-                if (!isChecked) {
-                    showToast(`Please select ${field.name.replace("_", " ")}`);
-                    radios[0].focus();
-                    return;
-                }
-            } else if (field.type === "checkbox") {
-                if (!field.checked) {
-                    showToast(`Please check ${field.name.replace("_", " ")}`);
-                    field.focus();
-                    return;
-                }
-            } else if (!field.value || field.value.trim() === "") {
-                let label = currentSection.querySelector(`label[for="${field.id}"]`);
-                let fieldName = label ? label.innerText.replace("*", "").trim() : field.name;
-                showToast(`Please enter ${fieldName}`);
-                field.focus();
-                return;
-            }
-        }
-
-        if (currentStep < totalSteps) {
-            completedStep = Math.max(completedStep, currentStep + 1);
-            currentStep++;
-
-            localStorage.setItem("completedStep", completedStep);
-            showStep(currentStep);
-        }
-    }
-
-    function showToast(message) {
-        Toastify({
-            text: message,
-            duration: 3000,
-            close: true,
-            gravity: "top",
-            position: "center",
-            backgroundColor: "#FF0000",
-            stopOnFocus: true,
-        }).showToast();
     }
 
     function prevStep() {
@@ -734,7 +695,6 @@ include('../includes/top-header.php');
         });
     });
     showStep(currentStep);
-
     const form = document.getElementById("staffForm");
     /* save on change */
     form.querySelectorAll("input, select, textarea").forEach(field => {
@@ -747,7 +707,7 @@ include('../includes/top-header.php');
         const data = {};
 
         form.querySelectorAll("input, select, textarea").forEach(field => {
-
+            if (field.name === "csrf_token") return;
             if (field.type === "radio") {
                 if (field.checked) {
                     data[field.name] = field.value;
@@ -761,7 +721,6 @@ include('../includes/top-header.php');
 
         localStorage.setItem("staffFormData", JSON.stringify(data));
     }
-
     document.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById("staffForm");
         const sameAddress = document.getElementById("sameAddress");
@@ -779,6 +738,7 @@ include('../includes/top-header.php');
             const data = JSON.parse(savedData);
 
             Object.keys(data).forEach(name => {
+                if (name === "csrf_token") return;
                 const field = form.querySelector(`[name="${name}"]`);
                 if (!field) return;
 
@@ -786,7 +746,11 @@ include('../includes/top-header.php');
                     const radio = form.querySelector(`input[name="${name}"][value="${data[name]}"]`);
                     if (radio) radio.checked = true;
                 } else if (field.type === "checkbox") {
-                    field.checked = data[name];
+                    if (Array.isArray(data[name])) {
+                        field.checked = data[name].includes(field.value);
+                    } else {
+                        field.checked = data[name];
+                    }
                 } else {
                     field.value = data[name];
                 }
@@ -807,18 +771,31 @@ include('../includes/top-header.php');
                         field.value = data[name];
                     }
                 });
-                if (data.sameAddress) {
-                    sameAddress.checked = true;
-                    addressMap.forEach(([from, to]) => {
-                        const fromEl = document.getElementById(from);
-                        const toEl = document.getElementById(to);
-                        if (fromEl && toEl) {
-                            toEl.value = fromEl.value;
-                            toEl.readOnly = true;
-                            toEl.style.background = "#f1f1f1";
-                        }
-                    });
-                }
+                sameAddress.addEventListener("change", function() {
+                    if (this.checked) {
+                        addressMap.forEach(([from, to]) => {
+                            const fromEl = document.getElementById(from);
+                            const toEl = document.getElementById(to);
+                            if (fromEl && toEl) {
+                                toEl.value = fromEl.value;
+                                toEl.readOnly = true;
+                                toEl.style.background = "#f1f1f1";
+                            }
+                        });
+                    } else {
+                        addressMap.forEach(([_, to]) => {
+                            const toEl = document.getElementById(to);
+                            if (toEl) {
+                                toEl.readOnly = false;
+                                toEl.style.background = "";
+                            }
+                        });
+                    }
+                    const formData = JSON.parse(localStorage.getItem("staffFormData") || "{}");
+                    formData.sameAddress = this.checked;
+                    localStorage.setItem("staffFormData", JSON.stringify(formData));
+                });
+
             }
         }
         sameAddress.addEventListener("change", function() {
@@ -847,13 +824,6 @@ include('../includes/top-header.php');
         });
     });
 
-    function finalSubmit() {
-        localStorage.removeItem("currentStep");
-        localStorage.removeItem("completedStep");
-        localStorage.removeItem("staffFormData");
-    }
-</script>
-<script>
     const addBtn = document.getElementById("addSalaryRow");
     const container = document.getElementById("salaryBreakdownContainer");
 
@@ -874,7 +844,6 @@ include('../includes/top-header.php');
                 <i class="bi bi-trash"></i>
             </button>
         `;
-
         container.appendChild(row);
 
         // Remove functionality
@@ -882,8 +851,7 @@ include('../includes/top-header.php');
             row.remove();
         });
     });
-</script>
-<script>
+
     function togglePassword(id) {
         const input = document.getElementById(id);
         const toggle = input.nextElementSibling; // span element
@@ -893,7 +861,197 @@ include('../includes/top-header.php');
             input.type = "password";
         }
     }
-</script>
+    document.querySelectorAll('#step-4 input[type="file"]').forEach(input => {
+        input.addEventListener('change', function() {
+            const file = this.files[0];
+            if (!file) return;
+            const previewArea = this.closest('.col-lg-3').querySelector('.preview-area');
+            previewArea.innerHTML = "";
+            // 🔒 2MB Validation
+            if (file.size > 2 * 1024 * 1024) {
+                showToast("File must be less than 2MB");
+                this.value = "";
+                return;
+            }
+            const fileType = file.type;
+            const fileURL = URL.createObjectURL(file);
+            const isImageField = this.id === "image";
+            let card = document.createElement("div");
+            card.className = "preview-card";
+            // Passport Image → Only Image
+            if (isImageField && !fileType.startsWith('image/')) {
+                showToast("Only JPG, JPEG, PNG allowed for Passport Image");
+                this.value = "";
+                return;
+            }
+            // IMAGE PREVIEW
+            if (fileType.startsWith('image/')) {
+                card.innerHTML = `
+                <img src="${fileURL}" class="preview-img">
+                <div class="status-check">✔</div>
+                <button type="button" class="remove-btn-staff">✖</button>
+            `;
+            }
+            // PDF PREVIEW
+            else if (fileType === "application/pdf") {
+                card.innerHTML = `
+                <div class="pdf-icon">📄</div>
+                <div>
+                    <div style="font-weight:600;font-size:14px;">Pdf Uploaded</div>
+                    <a href="${fileURL}" download="${file.name}" class="view-btn">Download</a>
+                </div>
+                <div class="status-check">✔</div>
+                <button type="button" class="remove-btn-staff">✖</button>
+            `;
+            } else {
+                alert("Invalid file type");
+                this.value = "";
+                return;
+            }
+            previewArea.appendChild(card);
+            // Remove Button
+            card.querySelector(".remove-btn-staff").addEventListener("click", () => {
+                this.value = "";
+                previewArea.innerHTML = "";
+            });
+        });
+    });
+    // Validation and submit process here 
+    function validateCurrentStep() {
+        const currentSection = document.querySelector(`#step-${currentStep}`);
+        const requiredFields = currentSection.querySelectorAll("[required]");
+        for (let field of requiredFields) {
+            if (field.type === "radio") {
+                const radios = currentSection.querySelectorAll(`input[name="${field.name}"]`);
+                const isChecked = Array.from(radios).some(r => r.checked);
 
+                if (!isChecked) {
+                    showToast(`Please select ${field.name.replace("_", " ")}`);
+                    radios[0].focus();
+                    return false;
+                }
+                continue;
+            }
+            if (field.type === "checkbox") {
+                if (!field.checked) {
+                    showToast(`Please check ${field.name.replace("_", " ")}`);
+                    field.focus();
+                    return false;
+                }
+                continue;
+            }
+            if (!field.value || field.value.trim() === "") {
+                let label = currentSection.querySelector(`label[for="${field.id}"]`);
+                let fieldName = label ? label.innerText.replace("*", "").trim() : field.name;
+                showToast(`Please enter ${fieldName}`);
+                field.focus();
+                return false;
+            }
+            if (field.name === "mobile" || field.id === "mobile") {
+                const mobilePattern = /^[0-9]{10}$/;
+                if (!mobilePattern.test(field.value.trim())) {
+                    showToast("Please enter a valid 10-digit mobile number");
+                    field.focus();
+                    return false;
+                }
+            }
+            if (field.name === "pincode" || field.id === "pincode") {
+                const pincodePattern = /^[0-9]{6}$/;
+                if (!pincodePattern.test(field.value.trim())) {
+                    showToast("Please enter a valid 6-digit pincode");
+                    field.focus();
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    function nextStep() {
+        if (!validateCurrentStep()) return;
+        if (currentStep < totalSteps) {
+            completedStep = Math.max(completedStep, currentStep + 1);
+            currentStep++;
+            localStorage.setItem("completedStep", completedStep);
+            showStep(currentStep);
+        }
+    }
+
+    async function finalSubmit() {
+        if (!validateCurrentStep()) return;
+        // Password match validation
+        const pass = document.getElementById("pass").value;
+        const cnf = document.getElementById("cnf_password").value;
+
+        const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/;
+
+        if (!strongRegex.test(pass)) {
+            showToast("Password must be at least 6 characters with uppercase, lowercase, number & special character");
+            document.getElementById("pass").focus();
+            return;
+        }
+
+        if (pass !== cnf) {
+            showToast("Passwords do not match");
+            document.getElementById("cnf_password").focus();
+            return;
+        }
+        const accessCheckboxes = document.querySelectorAll('input[name="access[]"]');
+        const isAnyChecked = Array.from(accessCheckboxes).some(cb => cb.checked);
+        if (!isAnyChecked) {
+            showToast("Please select at least one access permission");
+            accessCheckboxes[0].focus();
+            return;
+        }
+
+        // for send the data on server
+        const form = document.getElementById('staffForm');
+        if (!form) {
+            console.error("Form not found");
+            return;
+        }
+        const formData = new FormData(form);
+        try {
+            const response = await fetch("<?= BASE_URL ?>api/staff/create.php", {
+                method: 'POST',
+                body: formData,
+                credentials: "same-origin"
+            });
+            const result = await response.json();
+            console.log(result);
+            if (result.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: result.message,
+                    confirmButtonColor: '#28a745'
+                }).then(() => {
+
+                    localStorage.removeItem("currentStep");
+                    localStorage.removeItem("completedStep");
+                    localStorage.removeItem("staffFormData");
+                    window.location.href = "<?= BASE_URL ?>/staff/add-staff";
+                });
+            } else {
+                showToast(result.message || "Something went wrong");
+            }
+        } catch (error) {
+            console.error(error);
+            showToast("Server Error");
+        }
+    }
+
+    function showToast(message) {
+        Toastify({
+            text: message,
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#FF0000",
+            stopOnFocus: true,
+        }).showToast();
+    }
+</script>
 <?php include __DIR__ . '/../includes/footer.php'; ?>
 <?php ob_end_flush(); ?>
