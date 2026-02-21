@@ -1,89 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modern Input Field</title>
+    <meta charset="UTF-8">
+    <title>Form Buttons Demo</title>
 
-<style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#f4f6f9;
-    font-family:'Segoe UI', sans-serif;
-}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-.form{
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-    width:300px;
-}
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-.input-group{
-    position:relative;
-}
+    <style>
+        /* Submit button hover effect */
+        .btn-primary {
+            transition: 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
 
-.input-group input{
-    width:100%;
-    padding:14px 15px;
-    border:2px solid #ddd;
-    border-radius:8px;
-    font-size:16px;
-    outline:none;
-    background:transparent;
-    transition:0.3s ease;
-}
-
-.input-group label{
-    position:absolute;
-    top:50%;
-    left:15px;
-    transform:translateY(-50%);
-    color:#777;
-    font-size:16px;
-    pointer-events:none;
-    transition:0.3s ease;
-    background:#f4f6f9;
-    padding:0 5px;
-}
-
-/* Focus Effect */
-.input-group input:focus{
-    border-color:#4f46e5;
-    box-shadow:0 0 8px rgba(79,70,229,0.2);
-}
-
-.input-group input:focus + label,
-.input-group input:valid + label{
-    top:0;
-    font-size:13px;
-    color:#4f46e5;
-}
-</style>
-
+        /* Reset button hover */
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 
-<form class="form">
-    <div class="input-group">
-        <input type="text" required>
-        <label>Full Name</label>
-    </div>
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h4 class="mb-4">Doctor Registration Form</h4>
 
-    <div class="input-group">
-        <input type="email" required>
-        <label>Email Address</label>
-    </div>
+        <form>
 
-    <div class="input-group">
-        <input type="password" required>
-        <label>Password</label>
+            <!-- Example Field -->
+            <div class="mb-3">
+                <label class="form-label">
+                    Password 
+                    <small class="text-muted">(Minimum 6 Characters)</small>
+                    <span class="text-danger">*</span>
+                </label>
+                <input type="password" class="form-control" minlength="6" required>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex flex-column flex-md-row gap-3 mt-4">
+
+                <!-- Reset Button -->
+                <button type="reset" 
+                        class="btn btn-outline-secondary w-100 w-md-auto px-4 py-2 fw-semibold">
+                    <i class="bi bi-arrow-counterclockwise me-2"></i>
+                    Reset
+                </button>
+
+                <!-- Submit Button -->
+                <button type="submit" 
+                        class="btn btn-primary w-100 w-md-auto px-4 py-2 fw-semibold">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Submit
+                </button>
+
+            </div>
+
+        </form>
     </div>
-</form>
+</div>
 
 </body>
 </html>

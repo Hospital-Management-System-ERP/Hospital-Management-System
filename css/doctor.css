@@ -144,3 +144,55 @@
 .doctor-form .radio-box:hover .custom-square {
   border-color: #4f46e5;
 }
+.doctor-form .specialization-box {
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  padding: 6px 15px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 400;
+  transition: 0.3s;
+  background: #f9f9f9;
+}
+.doctor-form .specialization-box:hover {
+  border-color: #10874e;
+  background: #eef4ff;
+}
+.doctor-form .specialization-box input {
+  transform: scale(1.2);
+  margin-right: 10px;
+}
+.doctor-form .specialization-box.checked {
+  border-color: #10874e;
+  background: #e7f1ff;
+}
+/* Submit Button Gradient */
+.doctor-form .btn-submit-custom {
+  background: linear-gradient(135deg, #198754, #157347);
+  color: #fff;
+  border: none;
+  padding: 8px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+.doctor-form .btn-submit-custom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+  opacity: 0.95;
+}
+/* Reset Button Style */
+.doctor-form .btn-reset-custom {
+  background: #f8f9fa;
+  border: 1px solid #ced4da;
+  color: #333;
+  padding: 8px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+.doctor-form .btn-reset-custom:hover {
+  background: #e2e6ea;
+}
