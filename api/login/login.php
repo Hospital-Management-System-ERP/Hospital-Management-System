@@ -53,7 +53,7 @@ $table  = $config['table'];
 
 if ($config['hasRole']) {
     $sql = $conn->prepare("
-            SELECT id, name, username, password, role 
+            SELECT id, name, username, password, role, status
             FROM $table 
             WHERE username = ? AND role = ?
             LIMIT 1
@@ -61,7 +61,7 @@ if ($config['hasRole']) {
     $sql->bind_param('ss', $username, $role);
 } else {
     $sql = $conn->prepare("
-            SELECT id, name, username, password 
+            SELECT id, name, username, password, status 
             FROM $table 
             WHERE username = ?
             LIMIT 1
@@ -73,12 +73,20 @@ $sql->execute();
 $result = $sql->get_result();
 $user = $result->fetch_assoc();
 
-if (
-    !$user ||
-    !password_verify($password, $user['password']) ||
-    ($config['hasRole'] && $role !== $user['role'])
-) {
+if (!$user) {
     header("Location:" . BASE_URL . "login?error=invalid");
+    exit;
+}
+if (!password_verify($password, $user['password'])) {
+    header("Location:" . BASE_URL . "login?error=invalid");
+    exit;
+}
+if ($config['hasRole'] && $role !== $user['role']) {
+    header("Location:" . BASE_URL . "login?error=invalid_role");
+    exit;
+}
+if ($user['status'] != 1) {
+    header("Location:" . BASE_URL . "login?error=suspended");
     exit;
 }
 $permissions = [];

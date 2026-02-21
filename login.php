@@ -17,17 +17,18 @@ if ($error === 'required') {
     $msg = "Invalid role. Please select your correct role.";
 } else if ($error === 'invalid') {
     $msg = "Invalid username, password, or role. Please check and try again.";
+} else if ($error === 'suspended') {
+    $msg = 'You are suspended by admin!';
 } else if ($error === 'logout') {
     $msg = "You have successfully logged out.";
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Hospital ERP Login</title>
+    <title>Welcome to City Home Care Nursing Service | Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">

@@ -724,7 +724,7 @@
 }
 .add-staff-form .preview-card {
   position: relative;
-  margin-top: 5px!important;
+  margin-top: 5px !important;
   padding: 10px;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
@@ -763,7 +763,7 @@
   position: absolute;
   bottom: -6px;
   right: -6px;
-  background: #dc3545!important;
+  background: #dc3545 !important;
   color: white;
   border: none;
   width: 22px;
@@ -778,6 +778,61 @@
   text-decoration: underline;
 }
 .add-staff-form .pdf-details {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 600px) {
+  .staff-card {
+    margin-top: 15px;
+  }
+}
+.staff-actions .switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+/* Hide default HTML checkbox */
+.staff-actions .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+/* The slider */
+.staff-actions .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+/* The slider before (circle) */
+.staff-actions .slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* Checked state */
+.staff-actions .switch input:checked + .slider {
+  background-color: #28a745; /* green for active */
+}
+
+.staff-actions .switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Optional inactive color */
+.staff-actions .switch input + .slider {
+  background-color: #dc3545; /* red for inactive */
 }

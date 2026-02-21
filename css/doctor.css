@@ -1,0 +1,146 @@
+.doctor-form {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 25px;
+  min-height: auto;
+  border-left: 2px solid #153a2d;
+  border-right: 2px solid #153a2d;
+  box-shadow:
+    rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+  position: relative;
+  overflow: hidden;
+}
+.doctor-form::before,
+.doctor-form::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #153a2d;
+}
+.doctor-form::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+.doctor-form::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+.doctor-form span.corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #153a2d;
+}
+.doctor-form .corner.tr {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+}
+.doctor-form .corner.bl {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+}
+.doctor-form .doctor-personal-details {
+  height: auto;
+  border: 1px solid #313131;
+  border-radius: 5px;
+  padding: 10px;
+}
+.doctor-form .doctor-personal-details .doctor-title {
+  position: absolute;
+  margin-top: -22px;
+  background-color: #fff;
+  display: inline-block;
+  padding: 0 8px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: "Jost", sans-serif;
+  width: auto;
+  white-space: nowrap;
+  margin-left: 25px;
+}
+.doctor-form .mb-3 {
+  margin-bottom: 20px;
+}
+.doctor-form .form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #333;
+}
+.doctor-form .required {
+  color: red;
+}
+.doctor-form .form-control {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #10874e;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+.doctor-form .form-control:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+.doctor-form .form-control:hover {
+  border-color: #999;
+}
+.doctor-form .form-control::placeholder {
+  font-size: 13px;
+}
+/* Radio Group */
+.doctor-form .radio-group {
+  display: flex;
+  gap: 20px;
+}
+/* Hide default radio */
+.doctor-form .radio-box input {
+  display: none;
+}
+.doctor-form .radio-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+/* Square Design */
+.doctor-form .custom-square {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #aaa;
+  border-radius: 4px; /* square */
+  position: relative;
+  transition: 0.3s;
+}
+/* Checked Effect */
+.doctor-form .radio-box input:checked + .custom-square {
+  border-color: #4f46e5;
+  background: #4f46e5;
+}
+.doctor-form .radio-box input:checked + .custom-square::after {
+  content: "✔";
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* Hover */
+.doctor-form .radio-box:hover .custom-square {
+  border-color: #4f46e5;
+}

@@ -18,7 +18,7 @@ $sidebarItems = [
     ['title' => 'Online Appointments', 'icon' => 'bi-calendar-check', 'url' => BASE_URL.'appointment/online-appointment', 'permission' => 'appointment_online', 'parent' => 'Appointment'],
 
     // doctor management
-    ['title' => 'Add Doctor', 'icon' => 'bi-person-badge', 'url' => '', 'permission' => 'doctor_add', 'parent' => 'Doctor Management'],
+    ['title' => 'Add Doctor', 'icon' => 'bi-person-badge', 'url' => BASE_URL.'doctor/add-doctor', 'permission' => 'doctor_add', 'parent' => 'Doctor Management'],
     ['title' => 'Doctor List', 'icon' => 'bi-person-badge', 'url' => '', 'permission' => 'doctor_list', 'parent' => 'Doctor Management'],
     ['title' => 'Doctor Schedule', 'icon' => 'bi-person-badge', 'url' => '', 'permission' => 'doctor_schedule', 'parent' => 'Doctor Management'],
     ['title' => 'Specialization', 'icon' => 'bi-person-badge', 'url' => '', 'permission' => 'doctor_specialization', 'parent' => 'Doctor Management'],
