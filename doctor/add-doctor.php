@@ -173,7 +173,7 @@ include('../includes/top-header.php');
                                                 <label for="bloodgroup" class="form-label">
                                                     Blood Group
                                                 </label>
-                                                <input type="text" name="bgroup" class="form-control" id="bgroup" placeholder="A+,A-">
+                                                <input type="text" name="bgroup" class="form-control" oninput="this.value = this.value.toUpperCase();" id="bgroup" placeholder="A+,A-">
                                             </div>
                                         </div>
 
@@ -1039,7 +1039,7 @@ include('../includes/top-header.php');
                         Toastify({
                             text: result.message,
                             duration: 3000,
-                            gravity: "top", 
+                            gravity: "top",
                             position: "right",
                             backgroundColor: result.success ? "#28a745" : "#dc3545",
                             stopOnFocus: true
@@ -1047,6 +1047,9 @@ include('../includes/top-header.php');
 
                         if (result.success) {
                             doctorForm.reset();
+                            setTimeout(() => {
+                                location.reload();
+                            }, 3000);
                         }
                     } else {
                         alert(result.message || "Something went wrong");

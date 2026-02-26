@@ -292,7 +292,7 @@ try {
             ]);
             return;
         }
-        $staff_id = $conn->insert_id;
+        $staff_id = $emp_id;
     }
 
     if ($role !== 'admin' && !empty($access)) {
@@ -302,7 +302,7 @@ try {
         VALUES (?, ?)
     ");
         foreach ($access as $permission_id) {
-            $stmt->bind_param("ii", $staff_id, $permission_id);
+            $stmt->bind_param("si", $staff_id, $permission_id);
             if (!$stmt->execute()) {
                 echo json_encode(['success' => false, 'message' => $stmt->error]);
                 return;

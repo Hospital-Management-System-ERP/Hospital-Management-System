@@ -8,6 +8,7 @@ require __DIR__ . '/../api/login/auth.php';
 $claims = require_auth();
 $role = $claims['role'];
 $name = $claims['name'];
+$emp_id = $claims['emp_id'];
 $username = $claims['username'] ?? '';
 $user_id = $claims['sub'];
 $permissions = $claims['permissions'] ?? [];
@@ -16,6 +17,21 @@ if ($role !== 'admin' && !in_array('doctor_list', $permissions)) {
     http_response_code(403);
     echo "❌ Unauthorized Access";
     exit;
+}
+if ($role == 'admin') {
+    $doctor = $conn->prepare("SELECT * FROM tbl_doctor");
+} else {
+    $doctor = $conn->prepare("SELECT * FROM tbl_doctor WHERE emp_id = ?");
+    $doctor->bind_param('s', $emp_id);
+}
+$doctor->execute();
+$result = $doctor->get_result();
+$total_rows = $result->num_rows;  // number of doctor
+$data = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
 }
 include('../includes/header.php');
 include('../includes/sidebar.php');
@@ -69,33 +85,53 @@ include('../includes/top-header.php');
                         Doctor Details
                     </p>
                     <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6">
-                            <div class="staff-card d-flex mt-2">
-                                <div class="staff-img">
-                                    <img src="../staff/img/profile.png" alt="John Doe">
-                                </div>
-                                <div class="staff-details d-flex flex-column justify-content-between">
-                                    <div class="staff-info-top">
-                                        <h5 class="staff-name" style="display: flex; justify-content: space-between; align-items: center;">
-                                            <span>Asraf Ali</span>
-                                            <span style="font-size: 13px;">EMP ID: 12345</span>
-                                        </h5>
-                                        <p class="staff-role"><i class="bi-person-badge"></i> Doctor</p>
-                                        <p class="staff-email">Email: mdashraf9135@gmail.com</p>
-                                        <p class="staff-phone">Phone: +91 <span style="margin-left: 3px;">9234104573</span></p>
-                                        <p>Status:
-                                            <span class="staff-status active">Active</span>
-                                        </p>
+                        <?php foreach ($data as $row) : ?>
+                            <div class="col-12 col-lg-6 col-md-6">
+                                <div class="staff-card d-flex mt-2">
+                                    <div class="staff-img">
+                                        <?php if (!empty($row['image']) && file_exists(__DIR__ . '/images/' . $row['image'])): ?>
+                                            <img src="images/<?= $row['image']; ?>" alt="John Doe">
+                                        <?php else: ?>
+                                            <img src="img/profile.png" alt="John Doe">
+                                        <?php endif; ?>
                                     </div>
-                                    <div class="staff-actions">
-                                        <button class="btn btn-sm btn-primary">View Details</button>
-                                        <button class="btn btn-sm btn-warning">Edit Details</button>
-                                        <button class="btn btn-sm btn-danger">Delete</button>
-                                        <button class="btn btn-sm btn-secondary">Toggle Status</button>
+                                    <div class="staff-details d-flex flex-column justify-content-between">
+                                        <div class="staff-info-top">
+                                            <h5 class="staff-name" style="display: flex; justify-content: space-between; align-items: center;">
+                                                <span><?= $row['name']; ?></span>
+                                                <span style="font-size: 13px;">EMP ID: <?= $row['emp_id']; ?></span>
+                                            </h5>
+                                            <p class="staff-role"><i class="bi-person-badge"></i> <?= ucfirst($row['role']); ?></p>
+                                            <?php if (!empty($row['email'])) : ?>
+                                                <p class="staff-email">Email: <?= $row['email']; ?></p>
+                                            <?php endif; ?>
+                                            <p class="staff-phone">Phone: +91 <span style="margin-left: 3px;"><?= $row['mobile']; ?></span></p>
+                                            <p>Status:
+                                                <?php if ($row['status'] == 1) : ?>
+                                                    <span class="staff-status active">Active</span>
+                                                <?php else : ?>
+                                                    <span class="staff-status inactive">Inactive</span>
+                                                <?php endif; ?>
+                                            </p>
+                                        </div>
+                                        <div class="staff-actions">
+                                            <button class="btn btn-sm btn-primary">View Details</button>
+                                            <button class="btn btn-sm btn-warning">Edit Details</button>
+                                            <?php if ($role == 'admin'): ?>
+                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                                <button class="btn btn-sm btn-secondary">Toggle Status</button>
+                                                <label class="switch" style="margin-left:10px;">
+                                                    <input type="checkbox" class="status-toggle"
+                                                        data-id="<?= $row['id']; ?>"
+                                                        <?= $row['status'] == 1 ? 'checked' : ''; ?>>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>

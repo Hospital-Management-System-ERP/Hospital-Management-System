@@ -417,14 +417,14 @@ try {
         ]);
         exit;
     }
-    $doctor_id = $conn->insert_id;
+    $doctor_id = $emp_id;
     if (!empty($access)) {
         $stmt = $conn->prepare("
         INSERT INTO staff_permissions(staff_id, permission_id)
         VALUES (?, ?)
     ");
         foreach ($access as $permission_id) {
-            $stmt->bind_param("ii", $doctor_id, $permission_id);
+            $stmt->bind_param("si", $doctor_id, $permission_id);
             if (!$stmt->execute()) {
                 echo json_encode(['success' => false, 'message' => $stmt->error]);
                 exit;

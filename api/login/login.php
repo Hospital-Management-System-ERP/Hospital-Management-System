@@ -28,7 +28,7 @@ if ($username == '' || $password == '' || $role == '') {
 
 $roleTableMap = [
     'admin'         => ['table' => 'admin', 'hasRole' => false],
-    'doctor'        => ['table' => 'tbl_doctor', 'hasRole' => false],
+    'doctor'        => ['table' => 'tbl_doctor', 'hasRole' => true],
     // Staff Roles
     'nurse'         => ['table' => 'tbl_staff', 'hasRole' => true],
     'accountant'    => ['table' => 'tbl_staff', 'hasRole' => true],
@@ -53,7 +53,7 @@ $table  = $config['table'];
 
 if ($config['hasRole']) {
     $sql = $conn->prepare("
-            SELECT id, name, username, password, role, status
+            SELECT id, emp_id, name, username, password, role, status
             FROM $table 
             WHERE username = ? AND role = ?
             LIMIT 1
@@ -97,7 +97,7 @@ if ($config['hasRole']) {
         JOIN permissions p ON sp.permission_id = p.id
         WHERE sp.staff_id = ?
     ");
-    $permStmt->bind_param('i', $user['id']);
+    $permStmt->bind_param('s', $user['emp_id']);
     $permStmt->execute();
     $permResult = $permStmt->get_result();
     while ($row = $permResult->fetch_assoc()) {
@@ -113,6 +113,7 @@ $payload = [
     'iat'  => $issuedAt,
     'exp'  => $expired,
     'sub'  => $user['id'],
+    'emp_id' => $user['emp_id'],
     'name' => $user['name'],
     'username' => $user['username'],
     'role' => $role,

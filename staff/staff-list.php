@@ -10,6 +10,7 @@ $role = $claims['role'];
 $name = $claims['name'];
 $username = $claims['username'] ?? '';
 $user_id = $claims['sub'];
+$emp_id = $claims['emp_id'];
 $permissions = $claims['permissions'] ?? [];
 
 if ($role !== 'admin' && !in_array('staff_list', $permissions)) {
@@ -20,8 +21,8 @@ if ($role !== 'admin' && !in_array('staff_list', $permissions)) {
 if ($role == 'admin') {
     $staff = $conn->prepare("SELECT * FROM tbl_staff");
 } else {
-    $staff = $conn->prepare("SELECT * FROM tbl_staff WHERE id = ?");
-    $staff->bind_param('i', $user_id);
+    $staff = $conn->prepare("SELECT * FROM tbl_staff WHERE emp_id = ?");
+    $staff->bind_param('s', $emp_id);
 }
 $staff->execute();
 $result = $staff->get_result();
