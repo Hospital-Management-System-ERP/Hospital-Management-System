@@ -1,11 +1,17 @@
 <?php
 ob_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 header("Expires: 0");
 require __DIR__ . '/../api/login/auth.php';
 $claims = require_auth();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 $role = $claims['role'];
 $name = $claims['name'];
 $username = $claims['username'] ?? '';
@@ -55,7 +61,8 @@ include('../includes/top-header.php');
                 <div class="doctor-form">
                     <span class="corner tr"></span>
                     <span class="corner bl"></span>
-                    <form>
+                    <form id="doctorForm" method="POST" enctype="multipart/form-data" novalidate>
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                         <div class="row">
                             <div class="col-12">
                                 <div class="doctor-personal-details">
@@ -66,7 +73,7 @@ include('../includes/top-header.php');
                                                 <label for="name" class="form-label">
                                                     Name <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="text" name="name" class="form-control" id="name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" placeholder="Enter Name" required>
+                                                <input type="text" name="name" class="form-control" id="name" data-label="Name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" placeholder="Enter Name" required>
                                             </div>
                                         </div>
 
@@ -75,7 +82,7 @@ include('../includes/top-header.php');
                                                 <label for="fname" class="form-label">
                                                     Father's Name <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="text" name="fname" class="form-control" id="fname" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" placeholder="Enter Father's Name" required>
+                                                <input type="text" name="fname" class="form-control" id="fname" data-label="Father's Name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" placeholder="Enter Father's Name" required>
                                             </div>
                                         </div>
 
@@ -84,7 +91,7 @@ include('../includes/top-header.php');
                                                 <label for="mobile" class="form-label">
                                                     Mobile Number <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="text" name="mobile" class="form-control" id="mobile" pattern="[0-9]{10}" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter Mobile No" required>
+                                                <input type="text" name="mobile" class="form-control" id="mobile" data-label="Mobile Number" pattern="[0-9]{10}" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter Mobile No" required>
                                             </div>
                                         </div>
 
@@ -102,12 +109,12 @@ include('../includes/top-header.php');
                                                 <label for="dob" class="form-label">
                                                     Date of Birth <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="date" name="dob" class="form-control" id="email" required>
+                                                <input type="date" name="dob" class="form-control" data-label="Date of Birth" id="dob" required>
                                             </div>
                                         </div>
 
                                         <div class="col-12 col-lg-3 col-md-6">
-                                            <div class="mb-3">
+                                            <div class="mb-3 gender-wrapper" data-label="Gender">
                                                 <label class="form-label">
                                                     Gender <sup><span class="required">*</span></sup>
                                                 </label>
@@ -138,7 +145,7 @@ include('../includes/top-header.php');
                                                 <label for="religion" class="form-label">
                                                     Religion <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <select name="religion" id="religion" class="form-control" required>
+                                                <select name="religion" id="religion" data-label="Religion" class="form-control" required>
                                                     <option value="">-- Select Religion --</option>
                                                     <option value="Hinduism">Hinduism</option>
                                                     <option value="Islam">Islam</option>
@@ -157,7 +164,7 @@ include('../includes/top-header.php');
                                                 <label for="adhar" class="form-label">
                                                     Adhar Number <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="text" name="adhar" class="form-control" id="adhar" placeholder="1111 2222 3333" required>
+                                                <input type="text" name="adhar" class="form-control" id="adhar" data-label="Adhar Number" placeholder="1111 2222 3333" required>
                                             </div>
                                         </div>
 
@@ -175,7 +182,7 @@ include('../includes/top-header.php');
                                                 <label for="nationality" class="form-label">
                                                     Nationality <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <select name="nationality" id="nationality" class="form-control" required>
+                                                <select name="nationality" id="nationality" data-label="Nationality" class="form-control" required>
                                                     <option value="India" selected>India</option>
                                                     <option value="Afghanistan">Afghanistan</option>
                                                     <option value="Australia">Australia</option>
@@ -200,7 +207,7 @@ include('../includes/top-header.php');
                                                     Marital Status <sup><span class="required">*</span></sup>
                                                 </label>
 
-                                                <select name="marital_status" id="marital_status" class="form-control" required>
+                                                <select name="marital_status" id="marital_status" data-label="Marital Status" class="form-control" required>
                                                     <option value="">-- Select Marital Status --</option>
                                                     <option value="Single">Single</option>
                                                     <option value="Married">Married</option>
@@ -227,7 +234,7 @@ include('../includes/top-header.php');
                                                 <label for="qualification" class="form-label">
                                                     Qualification <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="text" name="qualification" class="form-control" id="qualification" placeholder="Enter Higher Qualification" required>
+                                                <input type="text" name="qualification" class="form-control" data-label="Qualification" id="qualification" placeholder="Enter Higher Qualification" required>
                                             </div>
                                         </div>
 
@@ -245,7 +252,7 @@ include('../includes/top-header.php');
                                                 <label for="experience" class="form-label">
                                                     Experience <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="text" name="experience" class="form-control" id="experience" placeholder="Enter Experience" required>
+                                                <input type="text" name="experience" class="form-control" data-label="Experience" id="experience" placeholder="Enter Experience" required>
                                             </div>
                                         </div>
 
@@ -254,7 +261,7 @@ include('../includes/top-header.php');
                                                 <label for="department" class="form-label">
                                                     Department <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <select name="department" id="department" class="form-control" required>
+                                                <select name="department" id="department" data-label="Department" class="form-control" required>
                                                     <option value="">-- Select Department --</option>
                                                     <option value="General Medicine">General Medicine</option>
                                                     <option value="General Surgery">General Surgery</option>
@@ -290,7 +297,7 @@ include('../includes/top-header.php');
                                                 <label for="consult_fee" class="form-label">
                                                     Consultancy Fees <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="text" name="consult_fee" class="form-control" id="consult_fee" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter Consultancy Fees" required>
+                                                <input type="text" name="consult_fee" class="form-control" data-label="Consult Fee" id="consult_fee" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter Consultancy Fees" required>
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-3 col-md-6">
@@ -298,7 +305,7 @@ include('../includes/top-header.php');
                                                 <label for="available_day" class="form-label">
                                                     Available Day <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <select name="available_day" id="available_day" class="form-control" required>
+                                                <select name="available_day" id="available_day" data-label="Available Day" class="form-control" required>
                                                     <option value="">-- Select Day --</option>
                                                     <option value="All">All Days</option>
                                                     <option value="Monday">Monday</option>
@@ -316,7 +323,7 @@ include('../includes/top-header.php');
                                                 <label for="from_time" class="form-label">
                                                     From Time <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="time" name="from_time" id="from_time" class="form-control" required>
+                                                <input type="time" name="from_time" id="from_time" data-label="From Time" class="form-control" required>
                                             </div>
                                         </div>
                                         <!-- To Time -->
@@ -325,7 +332,7 @@ include('../includes/top-header.php');
                                                 <label for="to_time" class="form-label">
                                                     To Time <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="time" name="to_time" id="to_time" class="form-control" required>
+                                                <input type="time" name="to_time" id="to_time" data-label="To Time" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -345,6 +352,7 @@ include('../includes/top-header.php');
                                                                 <label class="specialization-box d-flex align-items-center">
                                                                     <input type="checkbox"
                                                                         name="specialization[]"
+                                                                        data-label="Specialization"
                                                                         value="<?= $row['id']; ?>">
                                                                     <?= $row['specialization']; ?>
                                                                 </label>
@@ -370,6 +378,7 @@ include('../includes/top-header.php');
                                                     Full Address <sup><span class="required">*</span></sup>
                                                 </label>
                                                 <textarea name="permanent_address"
+                                                    data-label="Parmanent Address"
                                                     id="permanent_address"
                                                     class="form-control"
                                                     rows="3"
@@ -392,10 +401,11 @@ include('../includes/top-header.php');
                                                     <input class="form-check-input" type="checkbox" id="same_address" style="margin-left: 10px;">
                                                     <span>Same as Permanent Address</span>
                                                 </label>
-                                                <textarea name="permanent_address"
-                                                    id="permanent_address"
+                                                <textarea name="present_address"
+                                                    id="present_address"
                                                     class="form-control"
                                                     rows="3"
+                                                    data-label="Present Address"
                                                     placeholder="Enter full address"
                                                     required></textarea>
                                             </div>
@@ -423,7 +433,7 @@ include('../includes/top-header.php');
                                                 <label for="emp_type" class="form-label">
                                                     Employee Type <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <select name="emp_type" id="emp_type" class="form-control" required>
+                                                <select name="emp_type" id="emp_type" data-label="Employee Type" class="form-control" required>
                                                     <option value="" disabled selected>--Select Employee Type--</option>
                                                     <option value="permanent">Permanent</option>
                                                     <option value="contract">Contract</option>
@@ -438,7 +448,7 @@ include('../includes/top-header.php');
                                                 <label for="date_of_joining" class="form-label">
                                                     Date of Joining <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="date" name="date_of_joining" id="date_of_joining" class="form-control" required>
+                                                <input type="date" name="date_of_joining" id="date_of_joining" data-label="Date of Joining" class="form-control" required>
                                             </div>
                                         </div>
 
@@ -522,7 +532,7 @@ include('../includes/top-header.php');
                                                 <label for="basic_salary" class="form-label">
                                                     Basic Salary <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="text" name="salary" id="salary" placeholder="Enter Basic Salary" class="form-control" required>
+                                                <input type="text" name="salary" id="salary" data-label="Basic Salary" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter Basic Salary" class="form-control" required>
                                             </div>
                                             <div id="salaryBreakdownContainer">
                                                 <!-- Additional rows will appear here -->
@@ -544,39 +554,95 @@ include('../includes/top-header.php');
                                         </small>
                                     </p>
                                     <div class="row mt-2">
+                                        <!-- Preview Modal -->
+                                        <div class="modal fade" id="filePreviewModal" tabindex="-1">
+                                            <div class="modal-dialog modal-lg" style="max-width:500px;">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">File Preview</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body text-center" id="modalBody"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-3 col-md-6 col-sm-12">
-                                            <div class="mb-3">
+                                            <div class="mb-3 file-wrapper">
                                                 <label for="adharcard" class="form-label">
                                                     Aadhar Card
                                                 </label>
-                                                <input type="file" name="adharcard" id="adharcard" class="form-control">
+                                                <input type="file" name="adharcard" id="adharcard" class="form-control file-input" accept=".jpg, .jpeg, .png, .pdf">
+                                                <div class="mt-2 d-flex align-items-center gap-2 d-none preview-section">
+                                                    <i class="bi bi-eye text-primary fs-5 preview-eye" style="cursor:pointer;"></i>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary preview-btn">
+                                                        Preview
+                                                    </button>
+                                                    <a href="#" class="btn btn-sm btn-outline-success d-none download-btn" download>
+                                                        Download
+                                                    </a>
+                                                </div>
+
+                                                <small class="text-danger error-msg d-none"></small>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3 col-md-6 col-sm-12">
-                                            <div class="mb-3">
+                                            <div class="mb-3 file-wrapper">
                                                 <label for="certificate" class="form-label">
                                                     Certificate
                                                 </label>
-                                                <input type="file" name="certificate" id="certificate" class="form-control">
+                                                <input type="file" name="certificate" id="certificate" class="form-control file-input" accept=".jpg, .jpeg, .png, .pdf">
+                                                <div class="mt-2 d-flex align-items-center gap-2 d-none preview-section">
+                                                    <i class="bi bi-eye text-primary fs-5 preview-eye" style="cursor:pointer;"></i>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary preview-btn">
+                                                        Preview
+                                                    </button>
+                                                    <a href="#" class="btn btn-sm btn-outline-success d-none download-btn" download>
+                                                        Download
+                                                    </a>
+                                                </div>
+
+                                                <small class="text-danger error-msg d-none"></small>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3 col-md-6 col-sm-12">
-                                            <div class="mb-3">
+                                            <div class="mb-3 file-wrapper">
                                                 <label for="experience_letter" class="form-label">
                                                     Experience Letter
                                                 </label>
-                                                <input type="file" name="experience_letter" id="experience_letter" class="form-control">
+                                                <input type="file" name="experience_letter" id="experience_letter" class="form-control file-input" accept=".jpg, .jpeg, .png, .pdf">
+                                                <div class="mt-2 d-flex align-items-center gap-2 d-none preview-section">
+                                                    <i class="bi bi-eye text-primary fs-5 preview-eye" style="cursor:pointer;"></i>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary preview-btn">
+                                                        Preview
+                                                    </button>
+                                                    <a href="#" class="btn btn-sm btn-outline-success d-none download-btn" download>
+                                                        Download
+                                                    </a>
+                                                </div>
+
+                                                <small class="text-danger error-msg d-none"></small>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3 col-md-6 col-sm-12">
-                                            <div class="mb-3">
+                                            <div class="mb-3 file-wrapper">
                                                 <label for="photo" class="form-label">
                                                     Photo
                                                 </label>
-                                                <input type="file" name="photo" id="photo" class="form-control">
+                                                <input type="file" name="photo" id="photo" class="form-control file-input" accept=".jpg, .jpeg, .png">
+                                                <div class="mt-2 d-flex align-items-center gap-2 d-none preview-section">
+                                                    <i class="bi bi-eye text-primary fs-5 preview-eye" style="cursor:pointer;"></i>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary preview-btn">
+                                                        Preview
+                                                    </button>
+                                                    <a href="#" class="btn btn-sm btn-outline-success d-none download-btn" download>
+                                                        Download
+                                                    </a>
+                                                </div>
+
+                                                <small class="text-danger error-msg d-none"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -593,7 +659,7 @@ include('../includes/top-header.php');
                                                 <label for="username" class="form-label">
                                                     Username <sup><span class="required">*</span></sup>
                                                 </label>
-                                                <input type="text" name="username" id="username" class="form-control" placeholder="Enter Username" required>
+                                                <input type="text" name="username" id="username" data-label="Username" class="form-control" placeholder="Enter Username" required>
                                             </div>
                                         </div>
 
@@ -606,6 +672,7 @@ include('../includes/top-header.php');
                                                     <input type="password"
                                                         name="password"
                                                         id="password"
+                                                        data-label="Password"
                                                         class="form-control pe-5"
                                                         required>
 
@@ -627,6 +694,7 @@ include('../includes/top-header.php');
                                                     <input type="password"
                                                         name="cnf_password"
                                                         id="cnf_password"
+                                                        data-label="Confirm Password"
                                                         class="form-control pe-5"
                                                         required>
 
@@ -697,68 +765,331 @@ include('../includes/top-header.php');
     </div>
 </section>
 <script>
-    document.querySelectorAll('.specialization-box input').forEach((checkbox) => {
-        checkbox.addEventListener('change', function() {
-            this.closest('.specialization-box')
-                .classList.toggle('checked', this.checked);
+    document.addEventListener("DOMContentLoaded", function() {
+        /* ================================
+           Specialization Checkbox Toggle
+        ==================================*/
+        document.querySelectorAll('.specialization-box input').forEach((checkbox) => {
+            checkbox.addEventListener('change', function() {
+                this.closest('.specialization-box')
+                    .classList.toggle('checked', this.checked);
+            });
         });
-    });
-
-    // Add salary 
-    document.getElementById("addSalaryRow").addEventListener("click", function() {
-        let container = document.getElementById("salaryBreakdownContainer");
-
-        let row = document.createElement("div");
-        row.classList.add("salary-row", "p-1", "rounded", "mt-1");
-
-        row.innerHTML = `
-            <div class="mb-2">
-                <input type="text" name="salary_name[]" 
-                    class="form-control" 
-                    placeholder="Salary Name" required>
-            </div>
-            <div class="d-flex align-items-center gap-1 mb-2">
-                <input type="number" name="salary_amount[]" 
-                    class="form-control" 
-                    placeholder="Amount" required>
-                <button type="button" 
-                        class="btn btn-danger btn-sm p-1 removeRow">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </div>
-        `;
-        container.appendChild(row);
-    });
-    // Remove row
-    document.addEventListener("click", function(e) {
-        if (e.target.closest(".removeRow")) {
-            e.target.closest(".salary-row").remove();
+        /* ================================
+           Aadhar Validation (12 digit format)
+        ==================================*/
+        const adharInput = document.getElementById("adhar");
+        if (adharInput) {
+            adharInput.addEventListener("input", function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.substring(0, 12);
+                let formatted = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+                e.target.value = formatted;
+            });
         }
-    });
+        /* ================================
+           Same Address Logic
+        ==================================*/
+        const sameAddress = document.getElementById("same_address");
+        const permanent = document.getElementById("permanent_address");
+        const present = document.getElementById("present_address");
+        if (sameAddress) {
+            sameAddress.addEventListener("change", function() {
+                if (this.checked) {
+                    present.value = permanent.value;
+                    present.setAttribute("readonly", true);
+                    present.style.backgroundColor = "#e9ecef";
+                    present.style.cursor = "not-allowed";
+                } else {
+                    present.value = "";
+                    present.removeAttribute("readonly");
+                    present.style.backgroundColor = "";
+                    present.style.cursor = "auto";
+                }
+            });
+        }
+        if (permanent) {
+            permanent.addEventListener("input", function() {
+                if (sameAddress.checked) {
+                    present.value = this.value;
+                }
+            });
+        }
+        /* ================================
+           Add Salary Row
+        ==================================*/
+        const addSalaryBtn = document.getElementById("addSalaryRow");
+        const salaryContainer = document.getElementById("salaryBreakdownContainer");
+        if (addSalaryBtn) {
+            addSalaryBtn.addEventListener("click", function() {
+                let row = document.createElement("div");
+                row.classList.add("salary-row", "p-1", "rounded", "mt-1");
 
-    // show and hide password
-    document.querySelectorAll(".toggle-password").forEach(function(toggle) {
-        toggle.addEventListener("click", function() {
-            const input = document.getElementById(this.getAttribute("data-target"));
-            const icon = this.querySelector("i");
-            if (input.type === "password") {
-                input.type = "text";
-                icon.classList.remove("bi-eye");
-                icon.classList.add("bi-eye-slash");
-            } else {
-                input.type = "password";
-                icon.classList.remove("bi-eye-slash");
-                icon.classList.add("bi-eye");
+                row.innerHTML = `
+                <div class="mb-2">
+                    <input type="text" name="salary_name[]" 
+                        class="form-control" 
+                        placeholder="Salary Name" required>
+                </div>
+                <div class="d-flex align-items-center gap-1 mb-2">
+                    <input type="number" name="salary_amount[]" 
+                        class="form-control" 
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        placeholder="Amount" required>
+                    <button type="button" 
+                            class="btn btn-danger btn-sm p-1 removeRow">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            `;
+                salaryContainer.appendChild(row);
+            });
+        }
+        // Remove Salary Row
+        document.addEventListener("click", function(e) {
+            if (e.target.closest(".removeRow")) {
+                e.target.closest(".salary-row").remove();
             }
         });
-    });
+        /* ================================
+           File Preview
+        ==================================*/
+        document.querySelectorAll(".file-wrapper").forEach(wrapper => {
+            const fileInput = wrapper.querySelector(".file-input");
+            const previewSection = wrapper.querySelector(".preview-section");
+            const previewBtn = wrapper.querySelector(".preview-btn");
+            const previewEye = wrapper.querySelector(".preview-eye");
+            const downloadBtn = wrapper.querySelector(".download-btn");
+            const errorMsg = wrapper.querySelector(".error-msg");
+            const modalBody = document.getElementById("modalBody");
 
-    // reset --function confirmReset() {
-    function confirmReset() {
-        if (confirm("Are you sure you want to reset the form?")) {
-            document.querySelector("form").reset();
+            let fileURL = "";
+
+            fileInput.addEventListener("change", function() {
+
+                const file = this.files[0];
+                errorMsg.classList.add("d-none");
+                previewSection.classList.add("d-none");
+                downloadBtn.classList.add("d-none");
+
+                if (!file) return;
+
+                // Size Validation (2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    this.value = "";
+                    errorMsg.textContent = "File size must be under 2MB.";
+                    errorMsg.classList.remove("d-none");
+                    return;
+                }
+
+                const allowedExtensions = this.getAttribute("accept")
+                    .replace(/\s/g, '')
+                    .split(",");
+
+                const fileExtension = "." + file.name.split(".").pop().toLowerCase();
+
+                if (!allowedExtensions.includes(fileExtension)) {
+                    this.value = "";
+                    errorMsg.textContent = "Invalid file format.";
+                    errorMsg.classList.remove("d-none");
+                    return;
+                }
+
+                fileURL = URL.createObjectURL(file);
+                previewSection.classList.remove("d-none");
+            });
+
+            function openPreview() {
+
+                const file = fileInput.files[0];
+                if (!file) return;
+
+                modalBody.innerHTML = "";
+                downloadBtn.classList.add("d-none");
+
+                if (file.type.startsWith("image/")) {
+                    modalBody.innerHTML =
+                        `<img src="${fileURL}" class="img-fluid rounded shadow">`;
+                } else if (file.type === "application/pdf") {
+                    modalBody.innerHTML =
+                        `<iframe src="${fileURL}" width="100%" height="350px"></iframe>`;
+                    downloadBtn.href = fileURL;
+                    downloadBtn.classList.remove("d-none");
+                }
+                var modal = new bootstrap.Modal(
+                    document.getElementById("filePreviewModal")
+                );
+                modal.show();
+            }
+            previewBtn?.addEventListener("click", openPreview);
+            previewEye?.addEventListener("click", openPreview);
+        });
+        /* ================================
+           Show / Hide Password
+        ==================================*/
+        document.querySelectorAll(".toggle-password").forEach(function(toggle) {
+            toggle.addEventListener("click", function() {
+
+                const input = document.getElementById(this.getAttribute("data-target"));
+                const icon = this.querySelector("i");
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.replace("bi-eye", "bi-eye-slash");
+                } else {
+                    input.type = "password";
+                    icon.classList.replace("bi-eye-slash", "bi-eye");
+                }
+            });
+        });
+        /* ================================
+           Form Validation & Submit
+        ==================================*/
+        const doctorForm = document.getElementById('doctorForm');
+        if (doctorForm) {
+            doctorForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                let isValid = true;
+                doctorForm.querySelectorAll(".error-text").forEach(el => el.remove());
+                doctorForm.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
+                // Required Fields
+                doctorForm.querySelectorAll("[required]").forEach(input => {
+
+                    const label = input.getAttribute("data-label") || "This field";
+
+                    if (input.type === "file") {
+                        if (!input.files.length) {
+                            showError(input, "Please select " + label);
+                            isValid = false;
+                        }
+                    } else {
+                        if (!input.value.trim()) {
+                            showError(input, "Please enter " + label);
+                            isValid = false;
+                        }
+                    }
+                });
+                // Mobile Validation
+                const mobile = doctorForm.querySelector("input[name='mobile']");
+                if (mobile && mobile.value) {
+                    if (!/^[0-9]{10}$/.test(mobile.value)) {
+                        showError(mobile, "Enter valid 10 digit Mobile Number");
+                        isValid = false;
+                    }
+                }
+                const adhar = doctorForm.querySelector("input[name='adhar']");
+
+                if (adhar && adhar.value) {
+                    // Remove spaces before checking
+                    const cleanAdhar = adhar.value.replace(/\s/g, '');
+
+                    if (!/^[0-9]{12}$/.test(cleanAdhar)) {
+                        showError(adhar, "Enter valid 12 digit Aadhar Number");
+                        isValid = false;
+                    }
+                }
+                // Email Validation
+                const email = doctorForm.querySelector("input[type='email']");
+                if (email && email.value) {
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                        showError(email, "Enter valid Email Address");
+                        isValid = false;
+                    }
+                }
+                // Gender Validation
+                const genderWrapper = doctorForm.querySelector(".gender-wrapper");
+                const genderInputs = doctorForm.querySelectorAll("input[name='gender']");
+                let genderSelected = false;
+
+                genderInputs.forEach(radio => {
+                    if (radio.checked) genderSelected = true;
+                });
+
+                if (!genderSelected) {
+                    showRadioError(genderWrapper, "Please select Gender");
+                    isValid = false;
+                }
+                const specializations = doctorForm.querySelectorAll("input[name='specialization[]']");
+                let specializationChecked = false;
+                specializations.forEach(cb => {
+                    if (cb.checked) specializationChecked = true;
+                });
+                if (!specializationChecked) {
+                    const container = specializations[0].closest(".row");
+                    const error = document.createElement("div");
+                    error.className = "text-danger error-text mt-2";
+                    error.innerText = "Please select at least one Specialization";
+                    container.appendChild(error);
+                    isValid = false;
+                }
+                if (!isValid) {
+                    scrollToFirstError();
+                    return;
+                }
+
+                const formData = new FormData(doctorForm);
+
+                try {
+                    const response = await fetch('<?= BASE_URL ?>api/doctor/create.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                        Toastify({
+                            text: result.message,
+                            duration: 3000,
+                            gravity: "top", 
+                            position: "right",
+                            backgroundColor: result.success ? "#28a745" : "#dc3545",
+                            stopOnFocus: true
+                        }).showToast();
+
+                        if (result.success) {
+                            doctorForm.reset();
+                        }
+                    } else {
+                        alert(result.message || "Something went wrong");
+                    }
+                } catch (error) {
+                    alert("Server Error");
+                    console.error(error);
+                }
+            });
         }
-    }
+        /* ================================
+           Helper Functions
+        ==================================*/
+        function showError(input, message) {
+
+            input.classList.add("is-invalid");
+
+            const error = document.createElement("small");
+            error.className = "text-danger error-text";
+            error.innerText = message;
+
+            input.parentNode.appendChild(error);
+        }
+
+        function showRadioError(wrapper, message) {
+
+            const error = document.createElement("small");
+            error.className = "text-danger error-text d-block";
+            error.innerText = message;
+
+            wrapper.appendChild(error);
+        }
+
+        function scrollToFirstError() {
+            const firstError = document.querySelector(".error-text");
+            if (firstError) {
+                firstError.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+        }
+    });
 </script>
 <?php include __DIR__ . '/../includes/footer.php'; ?>
 <?php ob_end_flush(); ?>

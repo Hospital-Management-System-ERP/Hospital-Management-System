@@ -19,7 +19,7 @@ $sidebarItems = [
 
     // doctor management
     ['title' => 'Add Doctor', 'icon' => 'bi-person-badge', 'url' => BASE_URL.'doctor/add-doctor', 'permission' => 'doctor_add', 'parent' => 'Doctor Management'],
-    ['title' => 'Doctor List', 'icon' => 'bi-person-badge', 'url' => '', 'permission' => 'doctor_list', 'parent' => 'Doctor Management'],
+    ['title' => 'Doctor List', 'icon' => 'bi-person-badge', 'url' => BASE_URL.'doctor/doctor-list', 'permission' => 'doctor_list', 'parent' => 'Doctor Management'],
     ['title' => 'Doctor Schedule', 'icon' => 'bi-person-badge', 'url' => '', 'permission' => 'doctor_schedule', 'parent' => 'Doctor Management'],
     ['title' => 'Specialization', 'icon' => 'bi-person-badge', 'url' => '', 'permission' => 'doctor_specialization', 'parent' => 'Doctor Management'],
     ['title' => 'Consultation Charges', 'icon' => 'bi-person-badge', 'url' => '', 'permission' => 'doctor_charges', 'parent' => 'Doctor Management'],

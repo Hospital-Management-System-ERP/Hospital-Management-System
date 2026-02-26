@@ -12,25 +12,10 @@ $username = $claims['username'] ?? '';
 $user_id = $claims['sub'];
 $permissions = $claims['permissions'] ?? [];
 
-if ($role !== 'admin' && !in_array('staff_list', $permissions)) {
+if ($role !== 'admin' && !in_array('doctor_list', $permissions)) {
     http_response_code(403);
     echo "❌ Unauthorized Access";
     exit;
-}
-if ($role == 'admin') {
-    $staff = $conn->prepare("SELECT * FROM tbl_staff");
-} else {
-    $staff = $conn->prepare("SELECT * FROM tbl_staff WHERE id = ?");
-    $staff->bind_param('i', $user_id);
-}
-$staff->execute();
-$result = $staff->get_result();
-$total_rows = $result->num_rows;  // number of staff
-$data = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
 }
 include('../includes/header.php');
 include('../includes/sidebar.php');
@@ -44,9 +29,9 @@ include('../includes/top-header.php');
                     <span>
                         <i class="bi bi-grid-fill me-1"></i> <a href="<?= BASE_URL ?>">Dashboard</a>
                         <i class="bi bi-arrow-right mx-1"></i>
-                        <span><i class="bi bi-people-fill me-1"></i> Staff</span>
+                        <span><i class="bi-person-badge me-1"></i> Doctor</span>
                         <i class="bi bi-arrow-right mx-1"></i>
-                        <span>Staff List</span>
+                        <span>Doctor List</span>
                     </span>
                     <div class="digital-watch">
                         <?php include __DIR__ . '/../watch.php'; ?>
@@ -77,58 +62,40 @@ include('../includes/top-header.php');
                     </div>
                 </div>
             </div>
-            <div class="col-12 mb-5">
+            <div class="col-12">
                 <div class="staff-list">
                     <p class="staff-details-list">
                         <i class="bi bi-people-fill me-2"></i>
-                        Staff Details
+                        Doctor Details
                     </p>
                     <div class="row">
-                        <?php foreach ($data as $row) :  ?>
-                            <div class="col-12 col-lg-6 col-md-6">
-                                <div class="staff-card d-flex mt-2">
-                                    <div class="staff-img">
-                                        <?php if (!empty($row['image']) && file_exists(__DIR__ . '/images/' . $row['image'])): ?>
-                                            <img src="images/<?= $row['image']; ?>" alt="John Doe">
-                                        <?php else: ?>
-                                            <img src="img/profile.png" alt="John Doe">
-                                        <?php endif; ?>
+                        <div class="col-12 col-lg-6 col-md-6">
+                            <div class="staff-card d-flex mt-2">
+                                <div class="staff-img">
+                                    <img src="../staff/img/profile.png" alt="John Doe">
+                                </div>
+                                <div class="staff-details d-flex flex-column justify-content-between">
+                                    <div class="staff-info-top">
+                                        <h5 class="staff-name" style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span>Asraf Ali</span>
+                                            <span style="font-size: 13px;">EMP ID: 12345</span>
+                                        </h5>
+                                        <p class="staff-role"><i class="bi-person-badge"></i> Doctor</p>
+                                        <p class="staff-email">Email: mdashraf9135@gmail.com</p>
+                                        <p class="staff-phone">Phone: +91 <span style="margin-left: 3px;">9234104573</span></p>
+                                        <p>Status:
+                                            <span class="staff-status active">Active</span>
+                                        </p>
                                     </div>
-                                    <div class="staff-details d-flex flex-column justify-content-between">
-                                        <div class="staff-info-top">
-                                            <h5 class="staff-name" style="display: flex; justify-content: space-between; align-items: center;">
-                                                <span><?= $row['name']; ?></span>
-                                                <span style="font-size: 13px;">EMP ID: <?= $row['emp_id']; ?></span>
-                                            </h5>
-                                            <p class="staff-role"><?= ucfirst(strtolower($row['role'])); ?></p>
-                                            <p class="staff-email">Email: <?= $row['email']; ?></p>
-                                            <p class="staff-phone">Phone: +91 <span style="margin-left: 3px;"><?= $row['mobile']; ?></span></p>
-                                            <p>Status:
-                                                <?php if ($row['status'] == 1) : ?>
-                                                    <span class="staff-status active">Active</span>
-                                                <?php else : ?>
-                                                    <span class="staff-status inactive">Inactive</span>
-                                                <?php endif; ?>
-                                            </p>
-                                        </div>
-                                        <div class="staff-actions">
-                                            <button class="btn btn-sm btn-primary">View Details</button>
-                                            <button class="btn btn-sm btn-warning">Edit Details</button>
-                                            <?php if ($role == 'admin'): ?>
-                                                <button class="btn btn-sm btn-danger">Delete</button>
-                                                <button class="btn btn-sm btn-secondary">Toggle Status</button>
-                                                <label class="switch" style="margin-left:10px;">
-                                                    <input type="checkbox" class="status-toggle"
-                                                        data-id="<?= $row['id']; ?>"
-                                                        <?= $row['status'] == 1 ? 'checked' : ''; ?>>
-                                                    <span class="slider round"></span>
-                                                </label>
-                                            <?php endif; ?>
-                                        </div>
+                                    <div class="staff-actions">
+                                        <button class="btn btn-sm btn-primary">View Details</button>
+                                        <button class="btn btn-sm btn-warning">Edit Details</button>
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                        <button class="btn btn-sm btn-secondary">Toggle Status</button>
                                     </div>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
             </div>

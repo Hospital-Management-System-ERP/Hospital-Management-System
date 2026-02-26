@@ -14,7 +14,8 @@
         'leave-management' => 'Leave Management',
         'staff_payroll' => 'Staff Payroll',
         'roles-and-permission' => 'Roles and Permission',
-        'add-doctor' => 'Add Doctor'
+        'add-doctor' => 'Add Doctor',
+        'doctor-list' => 'Doctor List'
     ];
 
     $title = isset($titles[$page]) ? $titles[$page] : 'Home Page';
