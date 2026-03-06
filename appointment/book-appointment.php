@@ -6,6 +6,9 @@ header("Pragma: no-cache");
 header("Expires: 0");
 require __DIR__ . '/../api/login/auth.php';
 $claims = require_auth();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 $role = $claims['role'];
 $name = $claims['name'];
 $username = $claims['username'] ?? '';
@@ -50,12 +53,12 @@ include('../includes/top-header.php');
                     <h6 class="text-white mt-2">Please Fill in the Details to Book an Appointment</h6>
                 </div>
             </div>
-
             <div class="col-12">
                 <div class="appointment-form">
                     <span class="corner tr"></span>
                     <span class="corner bl"></span>
-                    <form>
+                    <form id="appointment" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                         <div class="row">
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="mb-3">
@@ -66,7 +69,7 @@ include('../includes/top-header.php');
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="mb-3">
                                     <label for="fullName" class="form-label">Mobile Number <sup><span style="color: red;">*</span></sup></label>
-                                    <input type="text" name="mobile" id="mobile" class="form-control traditional-input" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter your mobile no.">
+                                    <input type="text" name="mobile" id="mobile" maxlength="10" class="form-control traditional-input" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Enter your mobile no.">
                                 </div>
                             </div>
 
@@ -131,11 +134,19 @@ include('../includes/top-header.php');
                                                     <td data-label="Specialization">
                                                         <select id="specialization" name="specialization" class="form-select traditional-input">
                                                             <option value="" disabled selected>Select a Specialization</option>
-                                                            <option value="physiotherapy">Physiotherapy Specialist</option>
-                                                            <option value="gastro">Gastro Laproscopic Surgeon</option>
-                                                            <option value="neurosurgery">Neurosurgery — Gold Medalist</option>
-                                                            <option value="Consultant Physician (MBBS, MD Medicine)">Consultant Physician (MBBS, MD Medicine)</option>
-                                                            <option value="none">Not Preferred</option>
+                                                            <?php
+                                                            $query = $conn->prepare("SELECT * FROM tbl_doctor_specializations WHERE status = 1");
+                                                            $query->execute();
+                                                            $result = $query->get_result();
+                                                            if ($result->num_rows > 0) {
+                                                                while ($rowDr = $result->fetch_assoc()) {
+                                                            ?>
+                                                                    <option value="<?= $rowDr['id']; ?>"><?= $rowDr['specialization']; ?></option>
+                                                            <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                            <option value="not_preferred">Not Preferred</option>
                                                         </select>
                                                     </td>
                                                     <td data-label="Doctor">
@@ -177,90 +188,21 @@ include('../includes/top-header.php');
                                                 <tr>
                                                     <td data-label="services">
                                                         <div class="service-checkbox-group">
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Injection At Home">
-                                                                Injection At Home
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Home Care Nurse">
-                                                                Home Care Nurse
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Old Age Care">
-                                                                Old Age Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="ICU Setup">
-                                                                ICU Setup
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Medical Attendant">
-                                                                Medical Attendant
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Paralysis Patient Care">
-                                                                Paralysis Patient Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Dressing At Home">
-                                                                Dressing At Home
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Tracheotomy Care">
-                                                                Tracheotomy Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Colostomy Care">
-                                                                Colostomy Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Cardiac Patient Care">
-                                                                Cardiac Patient Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Trauma Care">
-                                                                Trauma Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Neuro Care">
-                                                                Neuro Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Cancer Patient Care">
-                                                                Cancer Patient Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Baby Care">
-                                                                Baby Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Coma Patient Care">
-                                                                Coma Patient Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Critical Care">
-                                                                Critical Care
-                                                            </label>
-
-                                                            <label class="service-item">
-                                                                <input type="checkbox" name="services[]" value="Medical Equipment on Rent">
-                                                                Medical Equipment on Rent
-                                                            </label>
+                                                            <?php
+                                                            $service = $conn->prepare("SELECT * FROM services WHERE is_custom = 0");
+                                                            $service->execute();
+                                                            $service_fetch = $service->get_result();
+                                                            if ($service_fetch->num_rows > 0) {
+                                                                while ($rowService = $service_fetch->fetch_assoc()) {
+                                                            ?>
+                                                                    <label class="service-item">
+                                                                        <input type="checkbox" name="services[]" value="<?= $rowService['service_name']; ?>">
+                                                                        <?= $rowService['service_name']; ?>
+                                                                    </label>
+                                                            <?php
+                                                                }
+                                                            }
+                                                            ?>
                                                         </div>
                                                         <div class="add-more-wrapper">
                                                             <button type="button" class="add-more-btn-appointment" onclick="addServiceInput()">
@@ -288,7 +230,7 @@ include('../includes/top-header.php');
                                                         <input type="date" name="to" id="to" class="form-control traditional-input">
                                                     </td>
                                                     <td data-label="Time">
-                                                        <input type="time" name="appointment_time" id="appointment_time" class="form-control traditional-input">
+                                                        <input type="time" name="appointment_time" id="home_time" class="form-control traditional-input">
                                                     </td>
                                                     <td data-label="purpose">
                                                         <textarea name="purpose" id="purpose" class="form-control traditional-input"></textarea>
@@ -312,29 +254,38 @@ include('../includes/top-header.php');
     </div>
 </section>
 <script>
-    const specializationDr = {
-        physiotherapy: ["Dr. Azra"],
-        gastro: ["Dr. Manish Kumar"],
-        neurosurgery: ["Dr. Ankur Anand"],
-        "Consultant Physician (MBBS, MD Medicine)": ["Dr. Aviral"],
-        none: ['Not Preferred']
-    };
-    const specializationSelect = document.getElementById('specialization');
-    const doctorSelect = document.getElementById('doctor');
-
-    specializationSelect.addEventListener('change', function() {
-        const selectedSpec = this.value;
-        doctorSelect.innerHTML = '<option value="" disabled selected>Select a Doctor</option>';
-
-        if (specializationDr[selectedSpec]) {
-            specializationDr[selectedSpec].forEach(doctor => {
-                const option = document.createElement('option');
-                option.value = doctor;
-                option.text = doctor;
+    document.getElementById('specialization').addEventListener('change', async function() {
+        let specialization_id = this.value;
+        let doctorSelect = document.getElementById("doctor");
+        if (!specialization_id) {
+            doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+            return;
+        }
+        if (specialization_id === "not_preferred") {
+            doctorSelect.innerHTML = `
+            <option value="not_preferred">Not Preferred</option>
+        `;
+            return;
+        }
+        doctorSelect.innerHTML = '<option value="">Loading...</option>';
+        try {
+            const response = await fetch('<?= BASE_URL ?>/api/doctor/get-doctor.php?specialization_id=' + specialization_id);
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+            data.forEach(function(doctor) {
+                let option = document.createElement("option");
+                option.value = doctor.emp_id;
+                option.text = doctor.name;
                 doctorSelect.appendChild(option);
             });
+        } catch (error) {
+            console.error("Error fetching doctors:", error);
+            doctorSelect.innerHTML = '<option value="">Failed to load doctors</option>';
         }
-    });
+    })
     // clinic specialization
     const serviceSelect = document.getElementById('service');
     const clinicTable = document.getElementById('clinicTable');
@@ -358,8 +309,7 @@ include('../includes/top-header.php');
             homeTable.querySelectorAll('input, select').forEach(el => el.disabled = true);
         }
     });
-</script>
-<script>
+
     function addServiceInput() {
         const container = document.getElementById('customServiceContainer');
 
@@ -372,10 +322,8 @@ include('../includes/top-header.php');
                placeholder="Enter service Name">
         <button type="button" class="remove-btn-appointment" onclick="this.parentElement.remove()">×</button>
     `;
-
         container.appendChild(div);
     }
-
     // date
     const fromInput = document.getElementById('from');
     const toInput = document.getElementById('to');
@@ -396,8 +344,30 @@ include('../includes/top-header.php');
     }
     fromInput.addEventListener('change', validateDates);
     toInput.addEventListener('change', validateDates);
-</script>
 
+    // data inserted
+    const appointment = document.getElementById('appointment');
+    appointment.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(appointment);
+        try {
+            const response = await fetch('<?= BASE_URL ?>/api/appointment/create.php', {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert(result.message);
+                appointment.reset();
+            } else {
+                alert(result.message || "Something Went Wrong");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Server Error");
+        }
+    })
+</script>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
 <?php ob_end_flush(); ?>

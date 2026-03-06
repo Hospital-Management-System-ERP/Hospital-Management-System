@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '2bc01b95eb907a967c6af073bd30e1849d0e8328',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,18 +11,18 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '2bc01b95eb907a967c6af073bd30e1849d0e8328',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'brick/math' => array(
-            'pretty_version' => '0.14.2',
-            'version' => '0.14.2.0',
-            'reference' => '55c950aa71a2cabc1d8f2bec1f8a7020bd244aa2',
+            'pretty_version' => '0.14.8',
+            'version' => '0.14.8.0',
+            'reference' => '63422359a44b7f06cae63c3b429b59e8efcc0629',
             'type' => 'library',
             'install_path' => __DIR__ . '/../brick/math',
             'aliases' => array(),
@@ -38,9 +38,9 @@
             'dev_requirement' => false,
         ),
         'firebase/php-jwt' => array(
-            'pretty_version' => 'v7.0.2',
-            'version' => '7.0.2.0',
-            'reference' => '5645b43af647b6947daac1d0f659dd1fbe8d3b65',
+            'pretty_version' => 'v7.0.3',
+            'version' => '7.0.3.0',
+            'reference' => '28aa0694bcfdfa5e2959c394d5a1ee7a5083629e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../firebase/php-jwt',
             'aliases' => array(),
@@ -191,9 +191,9 @@
             'dev_requirement' => false,
         ),
         'lcobucci/clock' => array(
-            'pretty_version' => '2.3.0',
-            'version' => '2.3.0.0',
-            'reference' => 'c7aadcd6fd97ed9e199114269c0be3f335e38876',
+            'pretty_version' => '2.2.0',
+            'version' => '2.2.0.0',
+            'reference' => 'fb533e093fd61321bfcbac08b131ce805fe183d3',
             'type' => 'library',
             'install_path' => __DIR__ . '/../lcobucci/clock',
             'aliases' => array(),
@@ -226,6 +226,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v7.0.2',
+            'version' => '7.0.2.0',
+            'reference' => 'ebf1655bd5b99b3f97e1a3ec0a69e5f4cd7ea088',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'phpoption/phpoption' => array(
             'pretty_version' => '1.9.5',
             'version' => '1.9.5.0',
@@ -252,12 +261,6 @@
             'install_path' => __DIR__ . '/../psr/clock',
             'aliases' => array(),
             'dev_requirement' => false,
-        ),
-        'psr/clock-implementation' => array(
-            'dev_requirement' => false,
-            'provided' => array(
-                0 => '1.0',
-            ),
         ),
         'psr/http-client' => array(
             'pretty_version' => '1.0.3',

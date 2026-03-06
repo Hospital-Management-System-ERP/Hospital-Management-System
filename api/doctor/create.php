@@ -435,7 +435,7 @@ try {
     if (!empty($specializations)) {
         $drSpecialisation = $conn->prepare("INSERT INTO tbl_doctor_specialization_map(doctor_id,specialization_id,created_at,updated_at)VALUES(?,?,NOW(),NOW())");
         foreach ($specializations as $specializations_id) {
-            $drSpecialisation->bind_param('ii', $doctor_id, $specializations_id);
+            $drSpecialisation->bind_param('si', $doctor_id, $specializations_id);
             if (!$drSpecialisation->execute()) {
                 echo json_encode(['success' => false, 'message' => $drSpecialisation->error]);
                 exit;

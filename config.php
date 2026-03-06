@@ -35,8 +35,3 @@ if (!$envKey || strlen($envKey) < 32) {
 } else {
     $secret_key = $envKey;
 }
-// $secret_key = $_ENV['APP_SECRET_KEY'] ?? null;
-
-// if (!$secret_key || strlen($secret_key) < 32) {
-//     die("APP_SECRET_KEY missing or too short in .env file");
-// }
